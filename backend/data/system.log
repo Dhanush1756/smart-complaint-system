@@ -1,0 +1,57 @@
+2026-03-15T14:53:20.662+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Starting SmartComplaintSystemApplication using Java 25.0.2 with PID 20844 (C:\Users\DHANUSH S\Downloads\smart-complaint-system\smart-complaint-system\backend\target\classes started by DHANUSHS in C:\Users\DHANUSH S\Downloads\smart-complaint-system\smart-complaint-system\backend)
+2026-03-15T14:53:20.665+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-03-15T14:53:20.667+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-03-15T14:53:20.760+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-03-15T14:53:20.761+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-03-15T14:53:22.559+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-15T14:53:22.578+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-15T14:53:22.579+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-03-15T14:53:22.660+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-15T14:53:22.661+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1898 ms
+2026-03-15T14:53:23.450+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-03-15T14:53:23.502+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-03-15T14:53:23.514+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Started SmartComplaintSystemApplication in 3.586 seconds (process running for 4.266)
+2026-03-15T14:53:23.519+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/departments.json
+2026-03-15T14:53:23.522+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/users.json
+2026-03-15T14:53:23.523+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/complaints.json
+2026-03-15T14:53:23.524+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/notifications.json
+2026-03-15T14:53:23.525+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/audit_log.json
+2026-03-15T14:53:23.601+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 1 records to ./data/departments.json
+2026-03-15T14:53:23.604+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 2 records to ./data/departments.json
+2026-03-15T14:53:23.607+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 3 records to ./data/departments.json
+2026-03-15T14:53:23.608+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 4 records to ./data/departments.json
+2026-03-15T14:53:23.611+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 5 records to ./data/departments.json
+2026-03-15T14:53:23.614+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 6 records to ./data/departments.json
+2026-03-15T14:53:23.616+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/departments.json
+2026-03-15T14:53:23.618+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 8 records to ./data/departments.json
+2026-03-15T14:53:23.621+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
+2026-03-15T14:53:23.622+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.service.DataInitializerService       : Seeded 9 departments
+2026-03-15T14:53:23.645+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 1 records to ./data/users.json
+2026-03-15T14:53:23.655+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 2 records to ./data/users.json
+2026-03-15T14:53:23.657+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 3 records to ./data/users.json
+2026-03-15T14:53:23.660+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 4 records to ./data/users.json
+2026-03-15T14:53:23.663+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 5 records to ./data/users.json
+2026-03-15T14:53:23.666+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
+2026-03-15T14:53:23.668+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
+2026-03-15T14:53:23.671+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
+2026-03-15T14:53:23.674+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
+2026-03-15T14:53:23.682+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 6 records to ./data/users.json
+2026-03-15T14:53:23.684+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T14:53:23.684+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.service.DataInitializerService       : Seeded admin, 4 officers, 2 citizens
+2026-03-15T14:53:23.688+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.service.DataInitializerService       : Data initialized: 9 departments, 7 users, 0 complaints
+2026-03-15T14:53:23.690+05:30  INFO 20844 --- [smart-complaint-system] [NotificationDispatcher] c.s.thread.NotificationDispatchThread    : NotificationDispatchThread started (producer-consumer pattern).
+2026-03-15T14:53:23.690+05:30  INFO 20844 --- [smart-complaint-system] [EscalationMonitor] c.s.thread.EscalationMonitorThread       : EscalationMonitorThread started. Check interval: 30 minutes
+2026-03-15T14:53:23.692+05:30 DEBUG 20844 --- [smart-complaint-system] [EscalationMonitor] c.s.thread.EscalationMonitorThread       : Running escalation check...
+2026-03-15T14:55:13.988+05:30  INFO 20844 --- [smart-complaint-system] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-15T14:55:13.989+05:30  INFO 20844 --- [smart-complaint-system] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-15T14:55:13.992+05:30  INFO 20844 --- [smart-complaint-system] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-03-15T14:55:42.464+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-10] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T14:55:42.470+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-10] com.smartcms.util.FileStorageUtil        : Saved 1 records to ./data/audit_log.json
+2026-03-15T14:55:58.572+05:30  WARN 20844 --- [smart-complaint-system] [http-nio-8080-exec-10] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.smartcms.exception.UserNotFoundException: User not found: username: Dhanush]
+2026-03-15T15:06:31.226+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-8] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T15:06:31.229+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-8] com.smartcms.util.FileStorageUtil        : Saved 2 records to ./data/audit_log.json
+2026-03-15T15:06:58.721+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-8] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T15:06:58.724+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-8] com.smartcms.util.FileStorageUtil        : Saved 3 records to ./data/audit_log.json
+2026-03-15T15:18:56.377+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-3] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T15:18:56.381+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-3] com.smartcms.util.FileStorageUtil        : Saved 4 records to ./data/audit_log.json
+2026-03-15T15:23:23.694+05:30 DEBUG 20844 --- [smart-complaint-system] [EscalationMonitor] c.s.thread.EscalationMonitorThread       : Running escalation check...
