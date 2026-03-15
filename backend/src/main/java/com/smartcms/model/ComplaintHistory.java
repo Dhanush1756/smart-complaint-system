@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
  * Tracks the history/timeline of a complaint.
  * Stored inside Complaint as a List (Collections).
  */
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
 public class ComplaintHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;

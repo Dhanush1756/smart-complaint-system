@@ -10,6 +10,7 @@ import java.util.List;
  * - Polymorphism (overrides abstract methods)
  * - Collections (ArrayList for complaint tracking)
  */
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
 public class Citizen extends User {
 
     private String address;

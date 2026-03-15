@@ -8,6 +8,7 @@ import java.util.Set;
  * Demonstrates inheritance and polymorphism.
  * Uses HashSet for permissions (Collections).
  */
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
 public class Admin extends User {
 
     private String designation;

@@ -8,6 +8,7 @@ import java.util.List;
  * Municipal staff who resolve complaints.
  * Demonstrates inheritance, encapsulation, collections.
  */
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
 public class Officer extends User {
 
     private String employeeId;

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
  * AuditLog - tracks all actions performed in the system.
  * Demonstrates file persistence and logging concept.
  */
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
 public class AuditLog implements Serializable {
 
     private static final long serialVersionUID = 1L;

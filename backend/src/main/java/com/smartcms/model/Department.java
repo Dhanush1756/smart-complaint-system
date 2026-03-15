@@ -8,6 +8,7 @@ import java.util.List;
  * Department model.
  * Municipal department that handles specific complaint categories.
  */
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -17,8 +18,8 @@ public class Department implements Serializable {
     private String name;
     private String description;
     private String headOfficerId;
-    private List<String> officerIds;     // Collections: ArrayList
-    private List<String> categories;    // Complaint categories this department handles
+    private List<String> officerIds; // Collections: ArrayList
+    private List<String> categories; // Complaint categories this department handles
     private boolean active;
     private int totalComplaints;
     private int resolvedComplaints;
@@ -40,7 +41,8 @@ public class Department implements Serializable {
     }
 
     public double getEfficiencyRate() {
-        if (totalComplaints == 0) return 0.0;
+        if (totalComplaints == 0)
+            return 0.0;
         return ((double) resolvedComplaints / totalComplaints) * 100.0;
     }
 
@@ -55,35 +57,85 @@ public class Department implements Serializable {
     }
 
     // Getters and Setters
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public String getId() {
+        return id;
+    }
 
-    public String getCode() { return code; }
-    public void setCode(String code) { this.code = code; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getCode() {
+        return code;
+    }
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-    public String getHeadOfficerId() { return headOfficerId; }
-    public void setHeadOfficerId(String headOfficerId) { this.headOfficerId = headOfficerId; }
+    public String getName() {
+        return name;
+    }
 
-    public List<String> getOfficerIds() { return officerIds; }
-    public void setOfficerIds(List<String> officerIds) { this.officerIds = officerIds; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public List<String> getCategories() { return categories; }
-    public void setCategories(List<String> categories) { this.categories = categories; }
+    public String getDescription() {
+        return description;
+    }
 
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public int getTotalComplaints() { return totalComplaints; }
-    public void setTotalComplaints(int totalComplaints) { this.totalComplaints = totalComplaints; }
+    public String getHeadOfficerId() {
+        return headOfficerId;
+    }
 
-    public int getResolvedComplaints() { return resolvedComplaints; }
-    public void setResolvedComplaints(int resolvedComplaints) { this.resolvedComplaints = resolvedComplaints; }
+    public void setHeadOfficerId(String headOfficerId) {
+        this.headOfficerId = headOfficerId;
+    }
+
+    public List<String> getOfficerIds() {
+        return officerIds;
+    }
+
+    public void setOfficerIds(List<String> officerIds) {
+        this.officerIds = officerIds;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getTotalComplaints() {
+        return totalComplaints;
+    }
+
+    public void setTotalComplaints(int totalComplaints) {
+        this.totalComplaints = totalComplaints;
+    }
+
+    public int getResolvedComplaints() {
+        return resolvedComplaints;
+    }
+
+    public void setResolvedComplaints(int resolvedComplaints) {
+        this.resolvedComplaints = resolvedComplaints;
+    }
 
     @Override
     public String toString() {

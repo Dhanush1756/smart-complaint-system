@@ -1,57 +1,228 @@
-2026-03-15T14:53:20.662+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Starting SmartComplaintSystemApplication using Java 25.0.2 with PID 20844 (C:\Users\DHANUSH S\Downloads\smart-complaint-system\smart-complaint-system\backend\target\classes started by DHANUSHS in C:\Users\DHANUSH S\Downloads\smart-complaint-system\smart-complaint-system\backend)
-2026-03-15T14:53:20.665+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Running with Spring Boot v3.2.0, Spring v6.1.1
-2026-03-15T14:53:20.667+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : No active profile set, falling back to 1 default profile: "default"
-2026-03-15T14:53:20.760+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2026-03-15T14:53:20.761+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2026-03-15T14:53:22.559+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2026-03-15T14:53:22.578+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-03-15T14:53:22.579+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
-2026-03-15T14:53:22.660+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-03-15T14:53:22.661+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1898 ms
-2026-03-15T14:53:23.450+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
-2026-03-15T14:53:23.502+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
-2026-03-15T14:53:23.514+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Started SmartComplaintSystemApplication in 3.586 seconds (process running for 4.266)
-2026-03-15T14:53:23.519+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/departments.json
-2026-03-15T14:53:23.522+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/users.json
-2026-03-15T14:53:23.523+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/complaints.json
-2026-03-15T14:53:23.524+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/notifications.json
-2026-03-15T14:53:23.525+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/audit_log.json
-2026-03-15T14:53:23.601+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 1 records to ./data/departments.json
-2026-03-15T14:53:23.604+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 2 records to ./data/departments.json
-2026-03-15T14:53:23.607+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 3 records to ./data/departments.json
-2026-03-15T14:53:23.608+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 4 records to ./data/departments.json
-2026-03-15T14:53:23.611+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 5 records to ./data/departments.json
-2026-03-15T14:53:23.614+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 6 records to ./data/departments.json
-2026-03-15T14:53:23.616+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/departments.json
-2026-03-15T14:53:23.618+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 8 records to ./data/departments.json
-2026-03-15T14:53:23.621+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
-2026-03-15T14:53:23.622+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.service.DataInitializerService       : Seeded 9 departments
-2026-03-15T14:53:23.645+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 1 records to ./data/users.json
-2026-03-15T14:53:23.655+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 2 records to ./data/users.json
-2026-03-15T14:53:23.657+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 3 records to ./data/users.json
-2026-03-15T14:53:23.660+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 4 records to ./data/users.json
-2026-03-15T14:53:23.663+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 5 records to ./data/users.json
-2026-03-15T14:53:23.666+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
-2026-03-15T14:53:23.668+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
-2026-03-15T14:53:23.671+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
-2026-03-15T14:53:23.674+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
-2026-03-15T14:53:23.682+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 6 records to ./data/users.json
-2026-03-15T14:53:23.684+05:30 DEBUG 20844 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
-2026-03-15T14:53:23.684+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.service.DataInitializerService       : Seeded admin, 4 officers, 2 citizens
-2026-03-15T14:53:23.688+05:30  INFO 20844 --- [smart-complaint-system] [restartedMain] c.s.service.DataInitializerService       : Data initialized: 9 departments, 7 users, 0 complaints
-2026-03-15T14:53:23.690+05:30  INFO 20844 --- [smart-complaint-system] [NotificationDispatcher] c.s.thread.NotificationDispatchThread    : NotificationDispatchThread started (producer-consumer pattern).
-2026-03-15T14:53:23.690+05:30  INFO 20844 --- [smart-complaint-system] [EscalationMonitor] c.s.thread.EscalationMonitorThread       : EscalationMonitorThread started. Check interval: 30 minutes
-2026-03-15T14:53:23.692+05:30 DEBUG 20844 --- [smart-complaint-system] [EscalationMonitor] c.s.thread.EscalationMonitorThread       : Running escalation check...
-2026-03-15T14:55:13.988+05:30  INFO 20844 --- [smart-complaint-system] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-03-15T14:55:13.989+05:30  INFO 20844 --- [smart-complaint-system] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-03-15T14:55:13.992+05:30  INFO 20844 --- [smart-complaint-system] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
-2026-03-15T14:55:42.464+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-10] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
-2026-03-15T14:55:42.470+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-10] com.smartcms.util.FileStorageUtil        : Saved 1 records to ./data/audit_log.json
-2026-03-15T14:55:58.572+05:30  WARN 20844 --- [smart-complaint-system] [http-nio-8080-exec-10] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [com.smartcms.exception.UserNotFoundException: User not found: username: Dhanush]
-2026-03-15T15:06:31.226+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-8] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
-2026-03-15T15:06:31.229+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-8] com.smartcms.util.FileStorageUtil        : Saved 2 records to ./data/audit_log.json
-2026-03-15T15:06:58.721+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-8] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
-2026-03-15T15:06:58.724+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-8] com.smartcms.util.FileStorageUtil        : Saved 3 records to ./data/audit_log.json
-2026-03-15T15:18:56.377+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-3] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
-2026-03-15T15:18:56.381+05:30 DEBUG 20844 --- [smart-complaint-system] [http-nio-8080-exec-3] com.smartcms.util.FileStorageUtil        : Saved 4 records to ./data/audit_log.json
-2026-03-15T15:23:23.694+05:30 DEBUG 20844 --- [smart-complaint-system] [EscalationMonitor] c.s.thread.EscalationMonitorThread       : Running escalation check...
+2026-03-15T17:12:09.682+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Starting SmartComplaintSystemApplication using Java 25.0.2 with PID 26264 (C:\Users\DHANUSH S\Downloads\smart-complaint-system-fixed\smart-complaint-system\backend\target\classes started by DHANUSHS in C:\Users\DHANUSH S\Downloads\smart-complaint-system-fixed\smart-complaint-system\backend)
+2026-03-15T17:12:09.686+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-03-15T17:12:09.688+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-03-15T17:12:09.813+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-03-15T17:12:09.814+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-03-15T17:12:12.298+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-15T17:12:12.320+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-15T17:12:12.321+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-03-15T17:12:12.426+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-15T17:12:12.427+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2612 ms
+2026-03-15T17:12:13.650+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-03-15T17:12:13.780+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-03-15T17:12:13.817+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Started SmartComplaintSystemApplication in 5.114 seconds (process running for 5.983)
+2026-03-15T17:12:13.832+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/departments.json
+2026-03-15T17:12:13.839+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/users.json
+2026-03-15T17:12:13.842+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/complaints.json
+2026-03-15T17:12:13.844+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/notifications.json
+2026-03-15T17:12:13.848+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/audit_log.json
+2026-03-15T17:12:14.029+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 1 records to ./data/departments.json
+2026-03-15T17:12:14.035+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 2 records to ./data/departments.json
+2026-03-15T17:12:14.039+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 3 records to ./data/departments.json
+2026-03-15T17:12:14.042+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 4 records to ./data/departments.json
+2026-03-15T17:12:14.047+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 5 records to ./data/departments.json
+2026-03-15T17:12:14.051+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 6 records to ./data/departments.json
+2026-03-15T17:12:14.056+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/departments.json
+2026-03-15T17:12:14.060+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 8 records to ./data/departments.json
+2026-03-15T17:12:14.064+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
+2026-03-15T17:12:14.065+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.service.DataInitializerService       : Seeded 9 departments
+2026-03-15T17:12:14.099+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 1 records to ./data/users.json
+2026-03-15T17:12:14.116+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 2 records to ./data/users.json
+2026-03-15T17:12:14.120+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 3 records to ./data/users.json
+2026-03-15T17:12:14.125+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 4 records to ./data/users.json
+2026-03-15T17:12:14.132+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 5 records to ./data/users.json
+2026-03-15T17:12:14.136+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
+2026-03-15T17:12:14.141+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
+2026-03-15T17:12:14.145+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
+2026-03-15T17:12:14.150+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 9 records to ./data/departments.json
+2026-03-15T17:12:14.170+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 6 records to ./data/users.json
+2026-03-15T17:12:14.179+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T17:12:14.181+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.service.DataInitializerService       : Seeded admin, 4 officers, 2 citizens
+2026-03-15T17:12:14.188+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.service.DataInitializerService       : Data initialized: 9 departments, 7 users, 0 complaints
+2026-03-15T17:12:14.194+05:30  INFO 26264 --- [smart-complaint-system] [EscalationMonitor] c.s.thread.EscalationMonitorThread       : EscalationMonitorThread started. Check interval: 30 minutes
+2026-03-15T17:12:14.194+05:30  INFO 26264 --- [smart-complaint-system] [NotificationDispatcher] c.s.thread.NotificationDispatchThread    : NotificationDispatchThread started (producer-consumer pattern).
+2026-03-15T17:12:14.197+05:30 DEBUG 26264 --- [smart-complaint-system] [EscalationMonitor] c.s.thread.EscalationMonitorThread       : Running escalation check...
+2026-03-15T17:12:27.446+05:30  INFO 26264 --- [smart-complaint-system] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-15T17:12:27.448+05:30  INFO 26264 --- [smart-complaint-system] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-15T17:12:27.451+05:30  INFO 26264 --- [smart-complaint-system] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-03-15T17:12:27.726+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-4] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T17:12:27.731+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-4] com.smartcms.util.FileStorageUtil        : Saved 1 records to ./data/audit_log.json
+2026-03-15T17:12:28.569+05:30  WARN 26264 --- [smart-complaint-system] [http-nio-8080-exec-6] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [jakarta.servlet.ServletException: Handler dispatch failed: java.lang.NoClassDefFoundError: com/smartcms/model/ComplaintCategory]
+2026-03-15T17:12:28.742+05:30  INFO 26264 --- [smart-complaint-system] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 67 class path changes (0 additions, 67 deletions, 0 modifications)
+2026-03-15T17:12:34.739+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Starting SmartComplaintSystemApplication using Java 25.0.2 with PID 26264 (C:\Users\DHANUSH S\Downloads\smart-complaint-system-fixed\smart-complaint-system\backend\target\classes started by DHANUSHS in C:\Users\DHANUSH S\Downloads\smart-complaint-system-fixed\smart-complaint-system\backend)
+2026-03-15T17:12:34.743+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-03-15T17:12:34.746+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-03-15T17:12:34.747+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Starting SmartComplaintSystemApplication using Java 25.0.2 with PID 26264 (C:\Users\DHANUSH S\Downloads\smart-complaint-system-fixed\smart-complaint-system\backend\target\classes started by DHANUSHS in C:\Users\DHANUSH S\Downloads\smart-complaint-system-fixed\smart-complaint-system\backend)
+2026-03-15T17:12:34.748+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-03-15T17:12:34.750+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-03-15T17:12:35.343+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-15T17:12:35.343+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-15T17:12:35.344+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-15T17:12:35.345+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-15T17:12:35.345+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-03-15T17:12:35.346+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-03-15T17:12:35.402+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-15T17:12:35.404+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 649 ms
+2026-03-15T17:12:35.404+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2026-03-15T17:12:35.405+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 651 ms
+2026-03-15T17:12:35.425+05:30  WARN 26264 --- [smart-complaint-system] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'adminController': Lookup method resolution failed
+2026-03-15T17:12:35.427+05:30  WARN 26264 --- [smart-complaint-system] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'adminController': Lookup method resolution failed
+2026-03-15T17:12:35.429+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-03-15T17:12:35.429+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-03-15T17:12:35.443+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-03-15T17:12:35.443+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-03-15T17:12:35.525+05:30 ERROR 26264 --- [smart-complaint-system] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'adminController': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:482) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:352) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1295) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1190) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:563) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:946) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.smartcms.SmartComplaintSystemApplication.main(SmartComplaintSystemApplication.java:18) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.0.jar:3.2.0]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.smartcms.controller.AdminController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@1ef016d4]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:483) ~[spring-core-6.1.1.jar:6.1.1]
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320) ~[spring-core-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:460) ~[spring-beans-6.1.1.jar:6.1.1]
+	... 22 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/smartcms/dto/Dtos$DepartmentRequest
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3010) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2329) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465) ~[spring-core-6.1.1.jar:6.1.1]
+	... 24 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.smartcms.dto.Dtos$DepartmentRequest
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:580) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:547) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.2.0.jar:3.2.0]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490) ~[na:na]
+	... 28 common frames omitted
+
+2026-03-15T17:12:35.525+05:30 ERROR 26264 --- [smart-complaint-system] [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'adminController': Lookup method resolution failed
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:482) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.determineCandidateConstructors(AutowiredAnnotationBeanPostProcessor.java:352) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.determineConstructorsFromBeanPostProcessors(AbstractAutowireCapableBeanFactory.java:1295) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1190) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:563) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:946) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.smartcms.SmartComplaintSystemApplication.main(SmartComplaintSystemApplication.java:18) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.2.0.jar:3.2.0]
+Caused by: java.lang.IllegalStateException: Failed to introspect Class [com.smartcms.controller.AdminController] from ClassLoader [org.springframework.boot.devtools.restart.classloader.RestartClassLoader@cbca2da]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:483) ~[spring-core-6.1.1.jar:6.1.1]
+	at org.springframework.util.ReflectionUtils.doWithLocalMethods(ReflectionUtils.java:320) ~[spring-core-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.checkLookupMethods(AutowiredAnnotationBeanPostProcessor.java:460) ~[spring-beans-6.1.1.jar:6.1.1]
+	... 22 common frames omitted
+Caused by: java.lang.NoClassDefFoundError: com/smartcms/dto/Dtos$DepartmentRequest
+	at java.base/java.lang.Class.getDeclaredMethods0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.privateGetDeclaredMethods(Class.java:3010) ~[na:na]
+	at java.base/java.lang.Class.getDeclaredMethods(Class.java:2329) ~[na:na]
+	at org.springframework.util.ReflectionUtils.getDeclaredMethods(ReflectionUtils.java:465) ~[spring-core-6.1.1.jar:6.1.1]
+	... 24 common frames omitted
+Caused by: java.lang.ClassNotFoundException: com.smartcms.dto.Dtos$DepartmentRequest
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:580) ~[na:na]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490) ~[na:na]
+	at java.base/java.lang.Class.forName0(Native Method) ~[na:na]
+	at java.base/java.lang.Class.forName(Class.java:547) ~[na:na]
+	at org.springframework.boot.devtools.restart.classloader.RestartClassLoader.loadClass(RestartClassLoader.java:121) ~[spring-boot-devtools-3.2.0.jar:3.2.0]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490) ~[na:na]
+	... 28 common frames omitted
+
+2026-03-15T17:12:38.010+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-03-15T17:12:38.011+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-03-15T17:12:38.016+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Starting SmartComplaintSystemApplication using Java 25.0.2 with PID 26264 (C:\Users\DHANUSH S\Downloads\smart-complaint-system-fixed\smart-complaint-system\backend\target\classes started by DHANUSHS in C:\Users\DHANUSH S\Downloads\smart-complaint-system-fixed\smart-complaint-system\backend)
+2026-03-15T17:12:38.017+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-03-15T17:12:38.017+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-03-15T17:12:38.022+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Starting SmartComplaintSystemApplication using Java 25.0.2 with PID 26264 (C:\Users\DHANUSH S\Downloads\smart-complaint-system-fixed\smart-complaint-system\backend\target\classes started by DHANUSHS in C:\Users\DHANUSH S\Downloads\smart-complaint-system-fixed\smart-complaint-system\backend)
+2026-03-15T17:12:38.022+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-03-15T17:12:38.023+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-03-15T17:12:38.444+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-15T17:12:38.444+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-15T17:12:38.445+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-15T17:12:38.445+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-15T17:12:38.446+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-03-15T17:12:38.446+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-03-15T17:12:38.479+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.a.c.c.C.[Tomcat-2].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2026-03-15T17:12:38.479+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 452 ms
+2026-03-15T17:12:38.484+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.a.c.c.C.[Tomcat-3].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2026-03-15T17:12:38.485+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 462 ms
+2026-03-15T17:12:38.692+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-03-15T17:12:38.692+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-03-15T17:12:38.709+05:30  WARN 26264 --- [smart-complaint-system] [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2026-03-15T17:12:38.711+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2026-03-15T17:12:38.715+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.SmartComplaintSystemApplication      : Started SmartComplaintSystemApplication in 0.747 seconds (process running for 30.881)
+2026-03-15T17:12:38.718+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-03-15T17:12:38.718+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-03-15T17:12:38.726+05:30 ERROR 26264 --- [smart-complaint-system] [restartedMain] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2026-03-15T17:12:38.793+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/complaints.json
+2026-03-15T17:12:38.793+05:30 DEBUG 26264 --- [smart-complaint-system] [restartedMain] com.smartcms.util.FileStorageUtil        : File not found, returning empty list: ./data/notifications.json
+2026-03-15T17:12:38.810+05:30  INFO 26264 --- [smart-complaint-system] [restartedMain] c.s.service.DataInitializerService       : Data initialized: 9 departments, 7 users, 0 complaints
+2026-03-15T17:12:38.812+05:30  INFO 26264 --- [smart-complaint-system] [EscalationMonitor] c.s.thread.EscalationMonitorThread       : EscalationMonitorThread started. Check interval: 30 minutes
+2026-03-15T17:12:38.812+05:30  INFO 26264 --- [smart-complaint-system] [NotificationDispatcher] c.s.thread.NotificationDispatchThread    : NotificationDispatchThread started (producer-consumer pattern).
+2026-03-15T17:12:38.813+05:30 DEBUG 26264 --- [smart-complaint-system] [EscalationMonitor] c.s.thread.EscalationMonitorThread       : Running escalation check...
+2026-03-15T17:12:41.946+05:30  INFO 26264 --- [smart-complaint-system] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-15T17:12:41.947+05:30  INFO 26264 --- [smart-complaint-system] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-03-15T17:12:41.976+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-2] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T17:12:41.981+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-2] com.smartcms.util.FileStorageUtil        : Saved 2 records to ./data/audit_log.json
+2026-03-15T17:13:01.524+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-10] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T17:13:01.527+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-10] com.smartcms.util.FileStorageUtil        : Saved 3 records to ./data/audit_log.json
+2026-03-15T17:13:51.059+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-7] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T17:13:51.062+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-7] com.smartcms.util.FileStorageUtil        : Saved 4 records to ./data/audit_log.json
+2026-03-15T17:14:23.842+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-4] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T17:14:23.844+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-4] com.smartcms.util.FileStorageUtil        : Saved 5 records to ./data/audit_log.json
+2026-03-15T17:14:59.452+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-10] com.smartcms.util.FileStorageUtil        : Saved 7 records to ./data/users.json
+2026-03-15T17:14:59.454+05:30 DEBUG 26264 --- [smart-complaint-system] [http-nio-8080-exec-10] com.smartcms.util.FileStorageUtil        : Saved 6 records to ./data/audit_log.json

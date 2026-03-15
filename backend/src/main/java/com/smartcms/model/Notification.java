@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
  * Notification model.
  * Queued notifications for users (processed by NotificationDispatchThread).
  */
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
 public class Notification implements Serializable {
 
     private static final long serialVersionUID = 1L;

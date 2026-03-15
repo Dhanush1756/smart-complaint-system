@@ -13,6 +13,7 @@ import java.util.Objects;
  * - Inheritance (Citizen, Admin, Officer extend this)
  * - Serializable for file persistence
  */
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "userType")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Citizen.class, name = "CITIZEN"),

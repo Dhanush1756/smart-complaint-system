@@ -14,6 +14,7 @@ import java.util.Objects;
  * - Collections (ArrayList for history)
  * - Comparable for PriorityQueue sorting
  */
+@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true)
 public class Complaint implements Serializable, Trackable, Resolvable, Comparable<Complaint> {
 
     private static final long serialVersionUID = 1L;
