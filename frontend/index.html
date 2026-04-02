@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Public Complaint Management System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    .map-pin-pulse {
+      width: 14px;
+      height: 14px;
+      background: var(--red, #c0392b);
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 3px var(--red, #c0392b);
+      animation: regpulse 1.5s infinite;
+    }
+
+    @keyframes regpulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.6);
+      }
+
+      70% {
+        box-shadow: 0 0 0 8px rgba(192, 57, 43, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(192, 57, 43, 0);
+      }
+    }
+
+    #reg-map {
+      height: 220px;
+      border-radius: 8px;
+      border: 2px solid #dde3f0;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+  </style>
+  <style>
+    body {
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 32px;
+      gap: 60px;
+      width: 100%;
+    }
+
+    .hero-left {
+      color: white;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(232, 160, 32, 0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      color: white;
+    }
+
+    .hero-title span {
+      color: var(--gold);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .portal-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .portal-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      color: white;
+    }
+
+    .portal-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: white;
+      transform: translateX(6px);
+    }
+
+    .portal-card .pc-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .portal-card .pc-icon.citizen {
+      background: rgba(26, 122, 74, 0.3);
+    }
+
+    .portal-card .pc-icon.admin {
+      background: rgba(232, 160, 32, 0.3);
+    }
+
+    .portal-card .pc-icon.officer {
+      background: rgba(35, 61, 120, 0.5);
+    }
+
+    .portal-card .pc-name {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .portal-card .pc-desc {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.55);
+      margin-top: 2px;
+    }
+
+    .portal-card .pc-arrow {
+      margin-left: auto;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 1.1rem;
+    }
+
+    /* ── Login Form ── */
+    .login-box {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .login-logo-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--navy);
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-size: 1.3rem;
+      color: var(--gold);
+    }
+
+    .login-logo-text {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--navy);
+    }
+
+    .login-logo-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .tab-row {
+      display: flex;
+      background: var(--off-white);
+      border-radius: 10px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 24px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 9px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .tab-btn.active {
+      background: white;
+      color: var(--navy);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .login-footer a {
+      color: var(--navy-light);
+      font-weight: 700;
+    }
+
+    .error-msg {
+      color: var(--red);
+      font-size: 0.85rem;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .feature {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.78rem;
+    }
+
+    .feature .f-icon {
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 32px 20px;
+      }
+
+      .hero-left {
+        text-align: center;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .portal-cards {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .portal-card {
+        flex: 1;
+        min-width: 200px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="hero">
+    <!-- Left: Info -->
+    <div class="hero-left">
+      <span class="hero-badge">🏛 Municipal Corporation of India</span>
+      <h1 class="hero-title">Smart Public<br><span>Complaint</span><br>Management</h1>
+      <p class="hero-desc">
+        A unified platform for citizens, municipal officers, and administrators
+        to track and resolve civic issues — faster, transparently, and accountably.
+      </p>
+
+      <div class="portal-cards">
+        <div class="portal-card" onclick="switchPortal('citizen')">
+          <div class="pc-icon citizen">🏘</div>
+          <div>
+            <div class="pc-name">Citizen Portal</div>
+            <div class="pc-desc">Submit & track your complaints</div>
+          </div>
+          <span class="pc-arrow">→</span>
+        </div>
+        <div class="portal-card" onclick="switchPortal('admin')">
+          <div class="pc-icon admin">⚙</div>
+          <div>
+            <div class="pc-name">Admin Portal</div>
+            <div class="pc-desc">Manage system & generate reports</div>
+          </div>
+          <span class="pc-arrow">→</span>
+        </div>
+        <div class="portal-card" onclick="switchPortal('officer')">
+          <div class="pc-icon officer">🔧</div>
+          <div>
+            <div class="pc-name">Officer Portal</div>
+            <div class="pc-desc">View & resolve assigned complaints</div>
+          </div>
+          <span class="pc-arrow">→</span>
+        </div>
+      </div>
+
+      <div class="features">
+        <div class="feature"><span class="f-icon">⚡</span>Real-time Tracking</div>
+        <div class="feature"><span class="f-icon">🔔</span>Notifications</div>
+        <div class="feature"><span class="f-icon">📊</span>Analytics</div>
+      </div>
+    </div>
+
+    <!-- Right: Login Form -->
+    <div class="login-box">
+      <div class="login-logo">
+        <div class="login-logo-icon">🏛</div>
+        <div>
+          <div class="login-logo-text">SmartCMS</div>
+          <div class="login-logo-sub">Public Complaint System</div>
+        </div>
+      </div>
+
+      <!-- Portal tabs -->
+      <div class="tab-row">
+        <button class="tab-btn active" onclick="switchPortal('citizen')" id="tab-citizen">🏘 Citizen</button>
+        <button class="tab-btn" onclick="switchPortal('admin')" id="tab-admin">⚙ Admin</button>
+        <button class="tab-btn" onclick="switchPortal('officer')" id="tab-officer">🔧 Officer</button>
+      </div>
+
+      <!-- Login form -->
+      <div class="form-section active" id="section-login">
+        <h2 style="font-size:1.2rem;color:var(--navy);margin-bottom:4px;">Sign In</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:20px;">
+          Enter your credentials to continue
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" id="login-username" class="form-control" placeholder="Enter username"
+            autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="login-password" class="form-control" placeholder="Enter password"
+            autocomplete="current-password">
+        </div>
+        <div class="error-msg" id="login-error">❌ Invalid username or password</div>
+        <button class="btn btn-primary w-full" style="margin-top:8px;justify-content:center;" onclick="doLogin()">
+          Sign In →
+        </button>
+
+        <div class="login-footer" id="register-link">
+          <span id="register-link-text">New citizen? <a href="#" onclick="showRegister()">Create Account</a></span>
+        </div>
+
+        <!-- Demo credentials -->
+        <div style="margin-top:20px;padding:14px;background:var(--off-white);border-radius:8px;font-size:0.8rem;">
+          <strong style="color:var(--navy);display:block;margin-bottom:8px;">🔑 Demo Credentials</strong>
+          <div id="demo-creds">
+            <div>👤 <b>citizen1</b> / citizen123 &nbsp; 👤 <b>citizen2</b> / citizen123</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Register form -->
+      <div class="form-section" id="section-register">
+        <h2 style="font-size:1.2rem;color:var(--navy);margin-bottom:4px;">Create Account</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:20px;">Register as a citizen</p>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" id="reg-username" class="form-control" placeholder="Choose username">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="Email address">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="text" id="reg-phone" class="form-control" placeholder="Mobile number">
+          </div>
+        </div>
+        <!-- Map Address Picker -->
+        <div class="form-group">
+          <label class="form-label">📍 Your Address (Pick on Map)</label>
+          <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;align-items:center;">
+            <button type="button" onclick="regUseMyLocation()" style="padding:6px 14px;background:#0f1e3c;color:white;border:none;border-radius:6px;
+                   font-size:0.82rem;font-weight:700;cursor:pointer;white-space:nowrap;">
+              📡 My Location
+            </button>
+            <input type="text" id="reg-map-search" style="flex:1;min-width:120px;padding:6px 10px;border:2px solid #dde3f0;
+                   border-radius:6px;font-size:0.82rem;outline:none;" placeholder="Search address..."
+              onkeydown="if(event.key==='Enter')regSearchLocation()">
+            <button type="button" onclick="regSearchLocation()" style="padding:6px 12px;background:transparent;border:2px solid #dde3f0;
+                   border-radius:6px;font-size:0.82rem;cursor:pointer;">🔍</button>
+          </div>
+          <div id="reg-map"></div>
+          <div id="reg-map-status" style="font-size:0.76rem;color:#7a8aaa;margin-bottom:8px;">
+            📌 Click map or use "My Location"
+          </div>
+          <input type="hidden" id="reg-lat">
+          <input type="hidden" id="reg-lng">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Address</label>
+          <input type="text" id="reg-address" class="form-control" placeholder="Auto-filled from map or type manually">
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Ward</label>
+            <input type="text" id="reg-ward" class="form-control" placeholder="Ward name/number">
+          </div>
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input type="text" id="reg-city" class="form-control" placeholder="City">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">PIN Code</label>
+            <input type="text" id="reg-pin" class="form-control" placeholder="PIN code">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="Choose password">
+          </div>
+        </div>
+
+        <div class="error-msg" id="reg-error">Registration failed</div>
+        <button class="btn btn-green w-full" style="margin-top:8px;justify-content:center;" onclick="doRegister()">
+          Create Account
+        </button>
+        <div class="login-footer">
+          Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
+        </div>
+      </div>
+
+      <!-- ── OFFICER REGISTER FORM ──────────────────── -->
+      <div class="form-section" id="section-officer-register">
+        <h2 style="font-size:1.2rem;color:var(--navy);margin-bottom:4px;">Officer Registration</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">Register as a municipal officer</p>
+
+        <div class="alert alert-info" style="font-size:0.82rem;padding:10px 14px;margin-bottom:16px;">
+          ℹ Your account will be <strong>active immediately</strong>. Admin can deactivate if needed.
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" id="off-reg-name" class="form-control" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" id="off-reg-username" class="form-control" placeholder="Choose username">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" id="off-reg-email" class="form-control" placeholder="Official email">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="text" id="off-reg-phone" class="form-control" placeholder="Mobile number">
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Employee ID</label>
+            <input type="text" id="off-reg-empid" class="form-control" placeholder="e.g. EMP-005">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Designation</label>
+            <input type="text" id="off-reg-designation" class="form-control" placeholder="e.g. Field Officer">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Department</label>
+          <select class="form-control" id="off-reg-dept">
+            <option value="">-- Loading departments... --</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="off-reg-password" class="form-control" placeholder="Choose password">
+        </div>
+
+        <div class="error-msg" id="off-reg-error"
+          style="display:none;color:#c0392b;font-size:0.85rem;margin-bottom:10px;"></div>
+        <button class="btn btn-primary w-full" style="justify-content:center;" onclick="doOfficerRegister()">
+          Register as Officer
+        </button>
+        <div class="login-footer">
+          Already have an account? <a href="#" onclick="showLogin()">Sign In</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    let currentPortal = 'citizen';
+
+    const DEMO_CREDS = {
+      citizen: '<div>👤 <b>citizen1</b> / citizen123 &nbsp; 👤 <b>citizen2</b> / citizen123</div>',
+      admin: '<div>⚙ <b>admin</b> / admin123</div>',
+      officer: '<div>🔧 <b>officer1</b> / officer123 &nbsp; 🔧 <b>officer2</b> / officer123</div>'
+    };
+
+    // Redirect if already logged in
+    const existing = Auth.get();
+    if (existing) {
+      redirectByRole(existing.role);
+    }
+
+    function redirectByRole(role) {
+      const routes = { CITIZEN: 'pages/citizen.html', ADMIN: 'pages/admin.html', OFFICER: 'pages/officer.html' };
+      if (routes[role]) window.location.href = routes[role];
+    }
+
+    function switchPortal(portal) {
+      currentPortal = portal;
+      ['citizen', 'admin', 'officer'].forEach(p => {
+        document.getElementById('tab-' + p).classList.toggle('active', p === portal);
+      });
+      // Show register link for citizen and officer, hide for admin
+      const regLink = document.getElementById('register-link');
+      const regText = document.getElementById('register-link-text');
+      if (portal === 'citizen') {
+        regLink.style.display = 'block';
+        regText.innerHTML = 'New citizen? <a href="#" onclick="showRegister()">Create Account</a>';
+      } else if (portal === 'officer') {
+        regLink.style.display = 'block';
+        regText.innerHTML = 'New officer? <a href="#" onclick="showOfficerRegister()">Register Here</a>';
+      } else {
+        regLink.style.display = 'none';
+      }
+      document.getElementById('demo-creds').innerHTML = DEMO_CREDS[portal] || '';
+      showLogin();
+    }
+
+    function showRegister() {
+      document.getElementById('section-login').classList.remove('active');
+      document.getElementById('section-officer-register').classList.remove('active');
+      document.getElementById('section-register').classList.add('active');
+    }
+    function showOfficerRegister() {
+      document.getElementById('section-login').classList.remove('active');
+      document.getElementById('section-register').classList.remove('active');
+      document.getElementById('section-officer-register').classList.add('active');
+      loadDepartmentsForReg();
+    }
+    function showLogin() {
+      document.getElementById('section-register').classList.remove('active');
+      document.getElementById('section-officer-register').classList.remove('active');
+      document.getElementById('section-login').classList.add('active');
+      document.getElementById('login-error').style.display = 'none';
+    }
+
+    async function doLogin() {
+      const username = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value;
+      const errEl = document.getElementById('login-error');
+      errEl.style.display = 'none';
+
+      if (!username || !password) {
+        errEl.textContent = '❌ Please enter username and password.';
+        errEl.style.display = 'block'; return;
+      }
+      try {
+        const res = await API.login(username, password);
+        Auth.save(res);
+        Toast.show('Welcome, ' + res.fullName + '!', 'success');
+        setTimeout(() => redirectByRole(res.role), 600);
+      } catch (e) {
+        errEl.textContent = '❌ ' + e.message;
+        errEl.style.display = 'block';
+      }
+    }
+
+    async function doRegister() {
+      const errEl = document.getElementById('reg-error');
+      errEl.style.display = 'none';
+      const body = {
+        fullName: document.getElementById('reg-name').value.trim(),
+        username: document.getElementById('reg-username').value.trim(),
+        email: document.getElementById('reg-email').value.trim(),
+        phone: document.getElementById('reg-phone').value.trim(),
+        address: document.getElementById('reg-address').value.trim(),
+        ward: document.getElementById('reg-ward').value.trim(),
+        city: document.getElementById('reg-city').value.trim(),
+        pinCode: document.getElementById('reg-pin').value.trim(),
+        password: document.getElementById('reg-password').value
+      };
+      if (!body.username || !body.password || !body.fullName) {
+        errEl.textContent = '❌ Name, username and password are required.';
+        errEl.style.display = 'block'; return;
+      }
+      try {
+        await API.register(body);
+        Toast.show('Account created! Please sign in.', 'success');
+        showLogin();
+        document.getElementById('login-username').value = body.username;
+      } catch (e) {
+        errEl.textContent = '❌ ' + e.message;
+        errEl.style.display = 'block';
+      }
+    }
+
+    // ── REGISTRATION MAP ──────────────────────────────────────
+    let regMap = null;
+    let regMarker = null;
+    let regMapInited = false;
+
+    function initRegMap(lat, lng) {
+      if (regMap) { regMap.remove(); regMap = null; }
+      regMap = L.map('reg-map').setView([lat, lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors', maxZoom: 19
+      }).addTo(regMap);
+
+      const redIcon = L.divIcon({
+        className: '',
+        html: '<div class="map-pin-pulse"></div>',
+        iconSize: [14, 14], iconAnchor: [7, 7]
+      });
+
+      regMarker = L.marker([lat, lng], { icon: redIcon, draggable: true }).addTo(regMap);
+      regMarker.bindPopup('📍 Your location<br><small>Drag to adjust</small>').openPopup();
+
+      regMarker.on('dragend', function (e) {
+        const p = e.target.getLatLng();
+        regReverseGeocode(p.lat, p.lng);
+      });
+
+      regMap.on('click', function (e) {
+        regMarker.setLatLng(e.latlng);
+        regReverseGeocode(e.latlng.lat, e.latlng.lng);
+      });
+
+      regReverseGeocode(lat, lng);
+      regMapInited = true;
+    }
+
+    function regUseMyLocation() {
+      const st = document.getElementById('reg-map-status');
+      st.textContent = '⏳ Getting location...';
+      if (!navigator.geolocation) {
+        st.textContent = '❌ Geolocation not supported.'; return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          st.textContent = '✅ Location found! Drag pin to adjust.';
+          initRegMap(pos.coords.latitude, pos.coords.longitude);
+        },
+        function () {
+          st.textContent = '❌ Permission denied. Click on the map instead.';
+          if (!regMapInited) initRegMap(20.5937, 78.9629);
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+
+    async function regSearchLocation() {
+      const q = document.getElementById('reg-map-search').value.trim();
+      if (!q) return;
+      const st = document.getElementById('reg-map-status');
+      st.textContent = '⏳ Searching...';
+      try {
+        const res = await fetch(
+          'https://nominatim.openstreetmap.org/search?format=json&q=' +
+          encodeURIComponent(q) + '&limit=1',
+          { headers: { 'Accept-Language': 'en' } }
+        );
+        const data = await res.json();
+        if (!data.length) { st.textContent = '❌ Not found. Try a different address.'; return; }
+        initRegMap(parseFloat(data[0].lat), parseFloat(data[0].lon));
+      } catch (e) { st.textContent = '❌ Search failed.'; }
+    }
+
+    async function regReverseGeocode(lat, lng) {
+      document.getElementById('reg-lat').value = lat;
+      document.getElementById('reg-lng').value = lng;
+      try {
+        const res = await fetch(
+          'https://nominatim.openstreetmap.org/reverse?format=json&lat=' + lat + '&lon=' + lng,
+          { headers: { 'Accept-Language': 'en' } }
+        );
+        const data = await res.json();
+        if (data && data.address) {
+          const a = data.address;
+          const parts = [a.road || a.pedestrian, a.neighbourhood || a.suburb].filter(Boolean);
+          const addr = parts.join(', ') || data.display_name.split(',').slice(0, 2).join(',');
+          document.getElementById('reg-address').value = addr;
+          const ward = a.neighbourhood || a.suburb || a.city_district || a.county || '';
+          if (ward) document.getElementById('reg-ward').value = ward;
+          const city = a.city || a.town || a.village || a.state_district || '';
+          if (city) document.getElementById('reg-city').value = city;
+          const pin = a.postcode || '';
+          if (pin) document.getElementById('reg-pin').value = pin;
+          document.getElementById('reg-map-status').innerHTML =
+            '✅ Address: <strong>' + addr.split(',')[0] + '</strong>';
+        }
+      } catch (e) {
+        document.getElementById('reg-map-status').textContent =
+          '✅ Pinned at (' + lat.toFixed(5) + ', ' + lng.toFixed(5) + ')';
+      }
+    }
+
+    // Init map when register tab opens
+    const _origShowRegister = showRegister;
+    showRegister = function () {
+      _origShowRegister();
+      setTimeout(function () {
+        if (!regMapInited) initRegMap(20.5937, 78.9629);
+        else if (regMap) regMap.invalidateSize();
+      }, 150);
+    };
+
+    // ── Officer Registration ──────────────────────────────────
+    async function loadDepartmentsForReg() {
+      try {
+        const depts = await API.getDepartments();
+        const sel = document.getElementById('off-reg-dept');
+        sel.innerHTML = '<option value="">-- Select Your Department --</option>' +
+          depts.map(d => '<option value="' + d.id + '">' + d.name + '</option>').join('');
+      } catch (e) {
+        document.getElementById('off-reg-dept').innerHTML =
+          '<option value="">Could not load departments</option>';
+      }
+    }
+
+    async function doOfficerRegister() {
+      const errEl = document.getElementById('off-reg-error');
+      errEl.style.display = 'none';
+
+      const body = {
+        fullName: document.getElementById('off-reg-name').value.trim(),
+        username: document.getElementById('off-reg-username').value.trim(),
+        email: document.getElementById('off-reg-email').value.trim(),
+        phone: document.getElementById('off-reg-phone').value.trim(),
+        employeeId: document.getElementById('off-reg-empid').value.trim(),
+        designation: document.getElementById('off-reg-designation').value.trim(),
+        departmentId: document.getElementById('off-reg-dept').value,
+        password: document.getElementById('off-reg-password').value
+      };
+
+      if (!body.fullName || !body.username || !body.password) {
+        errEl.textContent = '❌ Full name, username and password are required.';
+        errEl.style.display = 'block'; return;
+      }
+      if (!body.departmentId) {
+        errEl.textContent = '❌ Please select your department.';
+        errEl.style.display = 'block'; return;
+      }
+      if (!body.employeeId) {
+        errEl.textContent = '❌ Employee ID is required.';
+        errEl.style.display = 'block'; return;
+      }
+
+      try {
+        // Use admin token — officer self-registration uses a system admin ID
+        const res = await fetch(
+          'http://localhost:8080/api/admin/officers?adminId=ADM-0001',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          }
+        );
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Registration failed');
+
+        Toast.show('Officer account created! Please sign in.', 'success');
+        showLogin();
+        document.getElementById('login-username').value = body.username;
+      } catch (e) {
+        errEl.textContent = '❌ ' + e.message;
+        errEl.style.display = 'block';
+      }
+    }
+
+    // Enter key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        if (document.getElementById('section-login').classList.contains('active')) doLogin();
+        else if (document.getElementById('section-officer-register').classList.contains('active')) doOfficerRegister();
+        else doRegister();
+      }
+    });
+  </script>
+</body>
+
+</html>

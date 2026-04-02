@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Officer Portal – SmartCMS</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-brand">
+    <div class="brand-icon">🔧</div>
+    <div>SmartCMS <span class="brand-sub" id="nav-portal-name">Officer Portal</span></div>
+  </div>
+  <div class="navbar-right">
+    <div class="nav-user">
+      <div class="nav-avatar" id="nav-avatar">O</div>
+      <span id="nav-user-name">Officer</span>
+    </div>
+    <span class="nav-badge hidden" id="notif-badge">0</span>
+    <button class="btn-logout" onclick="logout()">Sign Out</button>
+  </div>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Work</div>
+      <a class="sidebar-item active" id="nav-dashboard" onclick="showSection('dashboard')">
+        <span class="icon">📊</span> Dashboard
+      </a>
+      <a class="sidebar-item" id="nav-assigned" onclick="showSection('assigned')">
+        <span class="icon">📋</span> Assigned Complaints
+      </a>
+      <a class="sidebar-item" id="nav-history" onclick="showSection('history')">
+        <span class="icon">📂</span> Work History
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Account</div>
+      <a class="sidebar-item" id="nav-notifications" onclick="showSection('notifications')">
+        <span class="icon">🔔</span> Notifications
+      </a>
+      <a class="sidebar-item" id="nav-profile" onclick="showSection('profile')">
+        <span class="icon">👤</span> Profile
+      </a>
+    </div>
+  </aside>
+
+  <main class="main-content">
+
+    <!-- ── DASHBOARD ──────────────────────────────────────── -->
+    <section id="section-dashboard">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Officer Dashboard</h1>
+          <p class="page-subtitle" id="officer-dept-label">Loading...</p>
+        </div>
+        <div id="performance-badge" style="text-align:right;">
+          <div style="font-size:0.78rem;color:var(--text-muted);">Performance Rating</div>
+          <div style="font-family:'Sora',sans-serif;font-size:1.8rem;font-weight:800;color:var(--gold);">
+            ★ <span id="perf-rating">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card blue">
+          <div class="stat-icon blue">📋</div>
+          <div><div class="stat-value" id="o-total">0</div><div class="stat-label">Total Assigned</div></div>
+        </div>
+        <div class="stat-card gold">
+          <div class="stat-icon gold">⏳</div>
+          <div><div class="stat-value" id="o-pending">0</div><div class="stat-label">Pending</div></div>
+        </div>
+        <div class="stat-card blue" style="border-left-color:#5b8fff">
+          <div class="stat-icon blue">🔧</div>
+          <div><div class="stat-value" id="o-inprog">0</div><div class="stat-label">In Progress</div></div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon green">✅</div>
+          <div><div class="stat-value" id="o-resolved">0</div><div class="stat-label">Resolved</div></div>
+        </div>
+      </div>
+
+      <!-- Priority Tasks -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Priority Tasks (Sorted by Urgency)</span>
+          <button class="btn btn-outline btn-sm" onclick="showSection('assigned')">View All →</button>
+        </div>
+        <div class="card-body" id="priority-tasks-list">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── ASSIGNED COMPLAINTS ────────────────────────────── -->
+    <section id="section-assigned" class="hidden">
+      <div class="page-header">
+        <h1 class="page-title">Assigned Complaints</h1>
+        <p class="page-subtitle">Sorted by priority (Emergency first)</p>
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-chip active" onclick="filterOfficerComplaints('ALL', this)">All</span>
+        <span class="filter-chip" onclick="filterOfficerComplaints('ASSIGNED_TO_OFFICER', this)">New</span>
+        <span class="filter-chip" onclick="filterOfficerComplaints('IN_PROGRESS', this)">In Progress</span>
+        <span class="filter-chip" onclick="filterOfficerComplaints('RESOLVED', this)">Resolved</span>
+        <span class="filter-chip" onclick="filterOfficerComplaints('ESCALATED', this)">Escalated</span>
+      </div>
+
+      <div id="assigned-list">
+        <div class="spinner"></div>
+      </div>
+    </section>
+
+    <!-- ── WORK HISTORY ───────────────────────────────────── -->
+    <section id="section-history" class="hidden">
+      <div class="page-header">
+        <h1 class="page-title">Work History</h1>
+        <p class="page-subtitle">Complaints you have resolved</p>
+      </div>
+      <div id="history-list"></div>
+    </section>
+
+    <!-- ── NOTIFICATIONS ──────────────────────────────────── -->
+    <section id="section-notifications" class="hidden">
+      <div class="page-header"><h1 class="page-title">Notifications</h1></div>
+      <div id="officer-notif-list"><div class="spinner"></div></div>
+    </section>
+
+    <!-- ── PROFILE ────────────────────────────────────────── -->
+    <section id="section-profile" class="hidden">
+      <div class="page-header"><h1 class="page-title">My Profile</h1></div>
+      <div class="card" style="max-width:600px;">
+        <div class="card-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input type="text" id="prof-name" class="form-control">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Username</label>
+              <input type="text" id="prof-username" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Employee ID</label>
+              <input type="text" id="prof-empid" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Department</label>
+              <input type="text" id="prof-dept" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Designation</label>
+              <input type="text" id="prof-designation" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone</label>
+              <input type="text" id="prof-phone" class="form-control">
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ── COMPLAINT DETAIL + UPDATE MODAL ───────────────── -->
+<div class="modal-backdrop" id="officer-complaint-modal">
+  <div class="modal" style="max-width:700px;">
+    <div class="modal-header">
+      <span class="modal-title" id="oc-modal-id">Complaint</span>
+      <button class="modal-close" onclick="closeModal('officer-complaint-modal')">✕</button>
+    </div>
+    <div class="modal-body" id="oc-modal-body">Loading...</div>
+    <div class="modal-footer" id="oc-modal-footer"></div>
+  </div>
+</div>
+
+<!-- ── RESOLVE MODAL ──────────────────────────────────── -->
+<div class="modal-backdrop" id="resolve-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">✅ Mark as Resolved — <span id="resolve-complaint-id"></span></span>
+      <button class="modal-close" onclick="closeModal('resolve-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="alert alert-info">
+        Provide a clear resolution note. The citizen will be notified and asked for feedback.
+      </div>
+      <div class="form-group">
+        <label class="form-label">Resolution Note *</label>
+        <textarea id="resolve-note" class="form-control" rows="4"
+          placeholder="Describe what was done to resolve the issue..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Resolution Image URL (optional)</label>
+        <input type="text" id="resolve-image" class="form-control" placeholder="https://...">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('resolve-modal')">Cancel</button>
+      <button class="btn btn-green" onclick="doResolve()">✅ Mark Resolved</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── PROGRESS UPDATE MODAL ─────────────────────────── -->
+<div class="modal-backdrop" id="progress-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">🔧 Update Progress — <span id="prog-complaint-id"></span></span>
+      <button class="modal-close" onclick="closeModal('progress-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Progress Note</label>
+        <textarea id="progress-note" class="form-control" rows="3"
+          placeholder="What work has been done so far?"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('progress-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="doUpdateProgress()">Update Progress</button>
+    </div>
+  </div>
+</div>
+
+<div class="loading-overlay"><div class="spinner"></div></div>
+
+<script src="../js/app.js"></script>
+<script>
+  if (!Auth.requireRole('OFFICER')) {}
+  const user = Auth.get();
+  renderNavbar('Officer Portal');
+
+  let myComplaints = [];
+  let activeComplaintId = null;
+
+  // Boot
+  loadProfile();
+  loadDashboard();
+
+  function showSection(name) {
+    document.querySelectorAll('main section').forEach(s => s.classList.add('hidden'));
+    document.getElementById('section-' + name).classList.remove('hidden');
+    document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+    const nav = document.getElementById('nav-' + name);
+    if (nav) nav.classList.add('active');
+
+    if (name === 'assigned')      loadAssigned();
+    if (name === 'history')       loadHistory();
+    if (name === 'notifications') loadNotifications();
+  }
+
+  // ── Dashboard ────────────────────────────────────────────────
+  async function loadDashboard() {
+    try {
+      myComplaints = await API.getOfficerComplaints(user.userId);
+
+      const total    = myComplaints.length;
+      const pending  = myComplaints.filter(c => c.status === 'ASSIGNED_TO_OFFICER').length;
+      const inProg   = myComplaints.filter(c => c.status === 'IN_PROGRESS').length;
+      const resolved = myComplaints.filter(c => ['RESOLVED','CLOSED'].includes(c.status)).length;
+
+      document.getElementById('o-total').textContent    = total;
+      document.getElementById('o-pending').textContent  = pending;
+      document.getElementById('o-inprog').textContent   = inProg;
+      document.getElementById('o-resolved').textContent = resolved;
+
+      // Load officer profile for rating
+      try {
+        const profile = await API.getProfile(user.userId);
+        document.getElementById('perf-rating').textContent = (profile.performanceRating||0).toFixed(1);
+        document.getElementById('officer-dept-label').textContent =
+          (profile.designation||'Officer') + ' — ' + (profile.departmentName||'');
+      } catch(e) {}
+
+      // Priority tasks: sort by priority level desc
+      const PRIO_ORDER = { EMERGENCY: 4, HIGH: 3, MEDIUM: 2, LOW: 1 };
+      const active = myComplaints
+        .filter(c => !['RESOLVED','CLOSED'].includes(c.status))
+        .sort((a,b) => (PRIO_ORDER[b.priority]||0) - (PRIO_ORDER[a.priority]||0))
+        .slice(0, 5);
+
+      const el = document.getElementById('priority-tasks-list');
+      if (!active.length) {
+        el.innerHTML = `<div class="empty-state"><div class="empty-icon">🎉</div><p>No pending tasks! Great work.</p></div>`;
+      } else {
+        el.innerHTML = active.map(c => buildOfficerComplaintCard(c)).join('');
+      }
+    } catch(e) { Toast.show('Dashboard error: ' + e.message, 'error'); }
+  }
+
+  // ── Assigned ─────────────────────────────────────────────────
+  async function loadAssigned() {
+    try {
+      Loader.show();
+      myComplaints = await API.getOfficerComplaints(user.userId);
+      renderAssigned(myComplaints);
+    } catch(e) { Toast.show('Failed to load', 'error'); }
+    finally { Loader.hide(); }
+  }
+
+  function renderAssigned(list) {
+    const el = document.getElementById('assigned-list');
+    if (!list.length) {
+      el.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>No complaints assigned yet.</p></div>`;
+    } else {
+      el.innerHTML = list.map(c => buildOfficerComplaintCard(c)).join('');
+    }
+  }
+
+  function filterOfficerComplaints(status, chipEl) {
+    document.querySelectorAll('.filter-row .filter-chip').forEach(c => c.classList.remove('active'));
+    chipEl.classList.add('active');
+    const filtered = status === 'ALL' ? myComplaints :
+      myComplaints.filter(c => c.status === status);
+    renderAssigned(filtered);
+  }
+
+  function buildOfficerComplaintCard(c) {
+    const isActive = !['RESOLVED','CLOSED'].includes(c.status);
+    return `
+      <div class="complaint-card" onclick="openOfficerComplaintModal('${c.complaintId}')">
+        ${c.escalated ? '<span class="escalated-ribbon">ESCALATED</span>' : ''}
+        <div class="cc-header">
+          <div>
+            <div class="cc-id">${c.complaintId}</div>
+            <div class="cc-title">${escapeHtml(c.title)}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+            ${statusBadge(c.status)} ${priorityBadge(c.priority)}
+          </div>
+        </div>
+        <div class="cc-desc">${escapeHtml((c.description||'').substring(0, 130))}...</div>
+        <div class="cc-meta">
+          <span>📂 ${CATEGORY_LABELS[c.category]||c.category}</span>
+          <span>📍 ${escapeHtml(c.location||c.ward||'')}</span>
+          <span>👤 ${escapeHtml(c.citizenName||'')}</span>
+          <span>🕐 ${timeAgo(c.createdAt)}</span>
+        </div>
+        ${isActive ? `
+        <div style="margin-top:14px;display:flex;gap:8px;" onclick="event.stopPropagation()">
+          ${c.status === 'ASSIGNED_TO_OFFICER' ?
+            `<button class="btn btn-primary btn-sm" onclick="openProgressModal('${c.complaintId}')">🔧 Start Work</button>` : ''}
+          ${c.status === 'IN_PROGRESS' ?
+            `<button class="btn btn-outline btn-sm" onclick="openProgressModal('${c.complaintId}')">📝 Update</button>` : ''}
+          ${['ASSIGNED_TO_OFFICER','IN_PROGRESS'].includes(c.status) ?
+            `<button class="btn btn-green btn-sm" onclick="openResolveModal('${c.complaintId}')">✅ Mark Resolved</button>` : ''}
+        </div>` : ''}
+      </div>`;
+  }
+
+  // ── History ──────────────────────────────────────────────────
+  async function loadHistory() {
+    try {
+      const complaints = await API.getOfficerComplaints(user.userId);
+      const resolved = complaints.filter(c => ['RESOLVED','CLOSED'].includes(c.status));
+      const el = document.getElementById('history-list');
+      if (!resolved.length) {
+        el.innerHTML = `<div class="empty-state"><div class="empty-icon">📂</div><p>No resolved complaints yet.</p></div>`;
+      } else {
+        el.innerHTML = resolved.map(c => `
+          <div class="complaint-card">
+            <div class="cc-header">
+              <div>
+                <div class="cc-id">${c.complaintId}</div>
+                <div class="cc-title">${escapeHtml(c.title)}</div>
+              </div>
+              <div>${statusBadge(c.status)}</div>
+            </div>
+            <div class="cc-desc">${escapeHtml(c.resolutionNote||'')}</div>
+            <div class="cc-meta">
+              <span>📂 ${CATEGORY_LABELS[c.category]||c.category}</span>
+              <span>👤 ${escapeHtml(c.citizenName||'')}</span>
+              <span>✅ Resolved ${timeAgo(c.resolvedAt)}</span>
+              ${c.citizenRating ? `<span>⭐ Rating: ${c.citizenRating}/5</span>` : ''}
+            </div>
+          </div>`).join('');
+      }
+    } catch(e) {}
+  }
+
+  // ── Complaint Detail Modal ───────────────────────────────────
+  async function openOfficerComplaintModal(complaintId) {
+    activeComplaintId = complaintId;
+    openModal('officer-complaint-modal');
+    document.getElementById('oc-modal-id').textContent = complaintId;
+    document.getElementById('oc-modal-body').innerHTML = '<div class="spinner"></div>';
+    document.getElementById('oc-modal-footer').innerHTML = '';
+
+    try {
+      const c = await API.getComplaint(complaintId);
+      const isActive = !['RESOLVED','CLOSED'].includes(c.status);
+
+      document.getElementById('oc-modal-body').innerHTML = `
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+          ${statusBadge(c.status)} ${priorityBadge(c.priority)}
+          ${c.escalated ? '<span class="badge badge-escalated">⚠ Escalated</span>' : ''}
+        </div>
+        <h3 style="color:var(--navy);margin-bottom:8px;">${escapeHtml(c.title)}</h3>
+        <p style="color:var(--text-mid);margin-bottom:16px;">${escapeHtml(c.description)}</p>
+        <div class="form-grid" style="font-size:0.87rem;margin-bottom:16px;">
+          <div><div class="text-muted">Category</div><div class="fw-bold">${CATEGORY_LABELS[c.category]||c.category}</div></div>
+          <div><div class="text-muted">Location</div><div class="fw-bold">${escapeHtml(c.location||'')}</div></div>
+          <div><div class="text-muted">Citizen</div><div class="fw-bold">${escapeHtml(c.citizenName||'')}</div></div>
+          <div><div class="text-muted">Ward</div><div class="fw-bold">${escapeHtml(c.ward||'')}</div></div>
+          <div><div class="text-muted">Submitted</div><div class="fw-bold">${formatDate(c.createdAt)}</div></div>
+          <div><div class="text-muted">Deadline</div>
+            <div class="fw-bold" style="color:${c.isOverdue?'var(--red)':'inherit'}">
+              ${formatDate(c.deadline)} ${c.isOverdue ? '⚠ OVERDUE' : ''}
+            </div>
+          </div>
+        </div>
+        ${c.imageUrl ? `<div style="margin-bottom:16px;"><img src="${escapeHtml(c.imageUrl)}" style="max-width:100%;border-radius:8px;" onerror="this.style.display='none'"></div>` : ''}
+        ${c.resolutionNote ? `<div class="alert alert-success"><strong>Resolution:</strong> ${escapeHtml(c.resolutionNote)}</div>` : ''}
+        <h4 style="margin:16px 0 12px;color:var(--navy);">Timeline</h4>
+        <div class="timeline">
+          ${(c.history||[]).map(h => `
+            <div class="timeline-item">
+              <div class="timeline-dot ${(h.status||'').toLowerCase()}"></div>
+              <div class="timeline-time">${formatDate(h.timestamp)}</div>
+              <div class="timeline-action">${escapeHtml(h.action)}</div>
+            </div>`).join('')}
+        </div>`;
+
+      if (isActive) {
+        document.getElementById('oc-modal-footer').innerHTML = `
+          <button class="btn btn-outline" onclick="closeModal('officer-complaint-modal')">Close</button>
+          <button class="btn btn-primary" onclick="closeModal('officer-complaint-modal');openProgressModal('${c.complaintId}')">
+            🔧 Update Progress
+          </button>
+          <button class="btn btn-green" onclick="closeModal('officer-complaint-modal');openResolveModal('${c.complaintId}')">
+            ✅ Resolve
+          </button>`;
+      } else {
+        document.getElementById('oc-modal-footer').innerHTML =
+          `<button class="btn btn-outline" onclick="closeModal('officer-complaint-modal')">Close</button>`;
+      }
+    } catch(e) {
+      document.getElementById('oc-modal-body').innerHTML =
+        `<div class="alert alert-error">Failed to load: ${e.message}</div>`;
+    }
+  }
+
+  // ── Progress Modal ───────────────────────────────────────────
+  function openProgressModal(complaintId) {
+    activeComplaintId = complaintId;
+    document.getElementById('prog-complaint-id').textContent = complaintId;
+    document.getElementById('progress-note').value = '';
+    openModal('progress-modal');
+  }
+
+  async function doUpdateProgress() {
+    const note = document.getElementById('progress-note').value.trim();
+    try {
+      await API.updateComplaint(activeComplaintId, {
+        officerId: user.userId,
+        statusUpdate: 'IN_PROGRESS',
+        progressNote: note || 'Work started'
+      });
+      closeModal('progress-modal');
+      Toast.show('Progress updated!', 'success');
+      loadDashboard();
+    } catch(e) { Toast.show('Error: ' + e.message, 'error'); }
+  }
+
+  // ── Resolve Modal ────────────────────────────────────────────
+  function openResolveModal(complaintId) {
+    activeComplaintId = complaintId;
+    document.getElementById('resolve-complaint-id').textContent = complaintId;
+    document.getElementById('resolve-note').value = '';
+    document.getElementById('resolve-image').value = '';
+    openModal('resolve-modal');
+  }
+
+  async function doResolve() {
+    const note = document.getElementById('resolve-note').value.trim();
+    if (!note) { Toast.show('Resolution note is required', 'error'); return; }
+    try {
+      await API.updateComplaint(activeComplaintId, {
+        officerId: user.userId,
+        statusUpdate: 'RESOLVED',
+        resolutionNote: note,
+        resolutionImageUrl: document.getElementById('resolve-image').value.trim()
+      });
+      closeModal('resolve-modal');
+      Toast.show('Complaint marked as resolved! 🎉', 'success');
+      loadDashboard();
+    } catch(e) { Toast.show('Error: ' + e.message, 'error'); }
+  }
+
+  // ── Notifications ────────────────────────────────────────────
+  async function loadNotifications() {
+    try {
+      const notifs = await API.getNotifications(user.userId);
+      const el = document.getElementById('officer-notif-list');
+      if (!notifs.length) {
+        el.innerHTML = `<div class="empty-state"><div class="empty-icon">🔔</div><p>No notifications.</p></div>`;
+      } else {
+        el.innerHTML = notifs.map(n => `
+          <div class="complaint-card" style="${n.read ? 'opacity:0.65;' : ''}">
+            <div class="cc-header">
+              <div>
+                <div class="cc-id">${n.type}</div>
+                <div class="cc-title">${escapeHtml(n.title)}</div>
+              </div>
+              <span style="font-size:0.78rem;color:var(--text-muted);">${timeAgo(n.createdAt)}</span>
+            </div>
+            <div class="cc-desc">${escapeHtml(n.message)}</div>
+            ${!n.read ? `<div style="margin-top:10px;">
+              <button class="btn btn-outline btn-xs" onclick="markRead('${n.id}',this)">Mark Read</button>
+            </div>` : ''}
+          </div>`).join('');
+      }
+    } catch(e) {}
+  }
+
+  async function markRead(id, btn) {
+    await API.markRead(id);
+    btn.closest('.complaint-card').style.opacity = '0.65';
+    btn.style.display = 'none';
+  }
+
+  // ── Profile ──────────────────────────────────────────────────
+  async function loadProfile() {
+    try {
+      const profile = await API.getProfile(user.userId);
+      document.getElementById('prof-name').value        = profile.fullName||'';
+      document.getElementById('prof-username').value    = profile.username||'';
+      document.getElementById('prof-empid').value       = profile.employeeId||'';
+      document.getElementById('prof-dept').value        = profile.departmentName||'';
+      document.getElementById('prof-designation').value = profile.designation||'';
+      document.getElementById('prof-phone').value       = profile.phone||'';
+    } catch(e) {}
+  }
+
+  async function saveProfile() {
+    try {
+      await API.updateProfile(user.userId, {
+        fullName: document.getElementById('prof-name').value,
+        phone: document.getElementById('prof-phone').value
+      });
+      Toast.show('Profile updated!', 'success');
+    } catch(e) { Toast.show('Update failed: ' + e.message, 'error'); }
+  }
+</script>
+</body>
+</html>

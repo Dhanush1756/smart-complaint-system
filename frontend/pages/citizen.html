@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citizen Portal – SmartCMS</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <!-- Leaflet Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    .leaflet-container {
+      font-family: 'Source Sans 3', sans-serif;
+    }
+
+    #complaint-map .leaflet-control-attribution {
+      font-size: 10px;
+    }
+
+    .map-pin-pulse {
+      width: 16px;
+      height: 16px;
+      background: var(--red);
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 3px var(--red);
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.6);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(192, 57, 43, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(192, 57, 43, 0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="brand-icon">🏛</div>
+      <div>
+        SmartCMS
+        <span class="brand-sub" id="nav-portal-name">Citizen Portal</span>
+      </div>
+    </div>
+    <div class="navbar-right">
+      <div class="nav-user">
+        <div class="nav-avatar" id="nav-avatar">C</div>
+        <span id="nav-user-name">Citizen</span>
+      </div>
+      <span class="nav-badge hidden" id="notif-badge">0</span>
+      <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+  </nav>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">My Complaints</div>
+        <a class="sidebar-item active" id="nav-dashboard" onclick="showSection('dashboard')">
+          <span class="icon">📊</span> Dashboard
+        </a>
+        <a class="sidebar-item" id="nav-my-complaints" onclick="showSection('my-complaints')">
+          <span class="icon">📋</span> My Complaints
+        </a>
+        <a class="sidebar-item" id="nav-submit" onclick="showSection('submit')">
+          <span class="icon">➕</span> Submit Complaint
+        </a>
+        <a class="sidebar-item" id="nav-track" onclick="showSection('track')">
+          <span class="icon">🔍</span> Track Complaint
+        </a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Account</div>
+        <a class="sidebar-item" id="nav-notifications" onclick="showSection('notifications')">
+          <span class="icon">🔔</span> Notifications
+        </a>
+        <a class="sidebar-item" id="nav-profile" onclick="showSection('profile')">
+          <span class="icon">👤</span> Profile
+        </a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+
+      <!-- ── DASHBOARD ──────────────────────────────────────── -->
+      <section id="section-dashboard">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Welcome back, <span id="citizen-name">Citizen</span>!</h1>
+            <p class="page-subtitle">Here's a summary of your civic complaints</p>
+          </div>
+          <button class="btn btn-gold" onclick="showSection('submit')">➕ Submit New Complaint</button>
+        </div>
+
+        <div class="stats-grid" id="citizen-stats">
+          <div class="stat-card blue">
+            <div class="stat-icon blue">📋</div>
+            <div>
+              <div class="stat-value" id="stat-total">0</div>
+              <div class="stat-label">Total Complaints</div>
+            </div>
+          </div>
+          <div class="stat-card gold">
+            <div class="stat-icon gold">⏳</div>
+            <div>
+              <div class="stat-value" id="stat-pending">0</div>
+              <div class="stat-label">Pending</div>
+            </div>
+          </div>
+          <div class="stat-card blue" style="border-left-color:#5b8fff">
+            <div class="stat-icon blue">🔧</div>
+            <div>
+              <div class="stat-value" id="stat-progress">0</div>
+              <div class="stat-label">In Progress</div>
+            </div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon green">✅</div>
+            <div>
+              <div class="stat-value" id="stat-resolved">0</div>
+              <div class="stat-label">Resolved</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Complaints -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Recent Complaints</span>
+            <button class="btn btn-outline btn-sm" onclick="showSection('my-complaints')">View All</button>
+          </div>
+          <div class="card-body" id="recent-complaints-list">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── MY COMPLAINTS ──────────────────────────────────── -->
+      <section id="section-my-complaints" class="hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">My Complaints</h1>
+            <p class="page-subtitle">All your submitted complaints</p>
+          </div>
+          <button class="btn btn-gold" onclick="showSection('submit')">➕ New Complaint</button>
+        </div>
+
+        <div class="filter-row" id="status-filters">
+          <span class="filter-chip active" onclick="filterComplaints('ALL', this)">All</span>
+          <span class="filter-chip" onclick="filterComplaints('SUBMITTED', this)">Submitted</span>
+          <span class="filter-chip" onclick="filterComplaints('IN_PROGRESS', this)">In Progress</span>
+          <span class="filter-chip" onclick="filterComplaints('RESOLVED', this)">Resolved</span>
+          <span class="filter-chip" onclick="filterComplaints('ESCALATED', this)">Escalated</span>
+        </div>
+
+        <div id="all-complaints-list">
+          <div class="spinner"></div>
+        </div>
+      </section>
+
+      <!-- ── SUBMIT COMPLAINT ───────────────────────────────── -->
+      <section id="section-submit" class="hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Submit a Complaint</h1>
+            <p class="page-subtitle">Report a civic issue in your area</p>
+          </div>
+        </div>
+
+        <div class="card" style="max-width:760px;">
+          <div class="card-body">
+            <div id="submit-success" class="alert alert-success hidden">
+              ✓ Complaint submitted! ID: <strong id="new-complaint-id"></strong>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Complaint Category *</label>
+              <select class="form-control" id="comp-category">
+                <option value="">-- Select Category --</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Title *</label>
+              <input type="text" id="comp-title" class="form-control" placeholder="Brief title for the issue">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description *</label>
+              <textarea id="comp-desc" class="form-control" rows="4"
+                placeholder="Describe the issue in detail (minimum 10 characters)"></textarea>
+            </div>
+
+            <!-- MAP LOCATION PICKER -->
+            <div class="form-group">
+              <label class="form-label">📍 Pick Location on Map *</label>
+              <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:center;">
+                <button type="button" class="btn btn-primary btn-sm" onclick="useCurrentLocation()">
+                  📡 Use My Current Location
+                </button>
+                <input type="text" id="map-search-input" class="form-control" style="flex:1;min-width:180px;"
+                  placeholder="Or type address and press Enter..."
+                  onkeydown="if(event.key==='Enter') searchMapLocation()">
+                <button type="button" class="btn btn-outline btn-sm" onclick="searchMapLocation()">🔍 Search</button>
+              </div>
+              <div id="complaint-map"
+                style="height:300px;border-radius:10px;border:2px solid var(--border);overflow:hidden;position:relative;">
+              </div>
+              <div id="map-status" style="margin-top:8px;font-size:0.82rem;color:var(--text-muted);">
+                📌 Click on the map or press "Use My Current Location" to pin the issue location
+              </div>
+              <input type="hidden" id="comp-lat">
+              <input type="hidden" id="comp-lng">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Location / Address *</label>
+              <input type="text" id="comp-location" class="form-control"
+                placeholder="Auto-filled from map, or type manually">
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Ward</label>
+                <input type="text" id="comp-ward" class="form-control" placeholder="Ward number/name">
+              </div>
+              <div class="form-group">
+                <label class="form-label">City</label>
+                <input type="text" id="comp-city" class="form-control" placeholder="City">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Image URL (optional)</label>
+              <input type="text" id="comp-image" class="form-control" placeholder="https://...">
+            </div>
+
+            <div id="submit-error" class="error-msg"
+              style="display:none;color:var(--red);font-size:0.85rem;margin-bottom:12px;"></div>
+            <div style="display:flex;gap:12px;">
+              <button class="btn btn-primary" onclick="submitComplaint()">Submit Complaint</button>
+              <button class="btn btn-outline" onclick="resetSubmitForm()">Reset</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── TRACK COMPLAINT ────────────────────────────────── -->
+      <section id="section-track" class="hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Track Complaint</h1>
+            <p class="page-subtitle">Check status and timeline of any complaint</p>
+          </div>
+        </div>
+
+        <div style="max-width:600px;margin-bottom:24px;">
+          <div class="d-flex gap-12">
+            <input type="text" id="track-id-input" class="form-control"
+              placeholder="Enter Complaint ID (e.g. CMP-2026-0001)">
+            <button class="btn btn-primary" onclick="trackComplaint()">Track</button>
+          </div>
+        </div>
+
+        <div id="track-result" class="hidden">
+          <div class="card" style="max-width:700px;">
+            <div class="card-body">
+              <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+                <div>
+                  <div style="font-size:0.8rem;color:var(--text-muted);">Complaint ID</div>
+                  <div style="font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:800;color:var(--navy);"
+                    id="track-complaint-id"></div>
+                </div>
+                <div id="track-status-badge"></div>
+              </div>
+              <div class="form-grid" style="margin-bottom:20px;">
+                <div>
+                  <div class="text-muted">Category</div>
+                  <div class="fw-bold" id="track-category"></div>
+                </div>
+                <div>
+                  <div class="text-muted">Priority</div>
+                  <div id="track-priority"></div>
+                </div>
+                <div>
+                  <div class="text-muted">Department</div>
+                  <div class="fw-bold" id="track-dept"></div>
+                </div>
+                <div>
+                  <div class="text-muted">Assigned Officer</div>
+                  <div class="fw-bold" id="track-officer"></div>
+                </div>
+                <div>
+                  <div class="text-muted">Deadline</div>
+                  <div class="fw-bold" id="track-deadline"></div>
+                </div>
+                <div>
+                  <div class="text-muted">Overdue?</div>
+                  <div class="fw-bold" id="track-overdue"></div>
+                </div>
+              </div>
+              <h3 style="font-size:0.9rem;margin-bottom:14px;color:var(--navy);">Complaint Timeline</h3>
+              <div class="timeline" id="track-timeline"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── NOTIFICATIONS ──────────────────────────────────── -->
+      <section id="section-notifications" class="hidden">
+        <div class="page-header">
+          <h1 class="page-title">Notifications</h1>
+        </div>
+        <div id="notif-list">
+          <div class="spinner"></div>
+        </div>
+      </section>
+
+      <!-- ── PROFILE ────────────────────────────────────────── -->
+      <section id="section-profile" class="hidden">
+        <div class="page-header">
+          <h1 class="page-title">My Profile</h1>
+        </div>
+        <div class="card" style="max-width:600px;">
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="prof-name" class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Username</label>
+                <input type="text" id="prof-username" class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="text" id="prof-email" class="form-control" disabled>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <input type="text" id="prof-phone" class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Ward</label>
+                <input type="text" id="prof-ward" class="form-control">
+              </div>
+              <div class="form-group">
+                <label class="form-label">City</label>
+                <input type="text" id="prof-city" class="form-control" disabled>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Complaint Detail Modal -->
+  <div class="modal-backdrop" id="complaint-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-complaint-id">Complaint Details</span>
+        <button class="modal-close" onclick="closeModal('complaint-modal')">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body-content">Loading...</div>
+      <div class="modal-footer" id="modal-footer-content"></div>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div class="modal-backdrop" id="feedback-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">⭐ Rate & Feedback</span>
+        <button class="modal-close" onclick="closeModal('feedback-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--text-muted);margin-bottom:16px;">Rate your experience for complaint <strong
+            id="fb-complaint-id"></strong></p>
+        <div class="form-group">
+          <label class="form-label">Rating</label>
+          <div class="star-rating" id="star-rating">
+            <span class="star" data-val="1" onclick="setRating(1)">★</span>
+            <span class="star" data-val="2" onclick="setRating(2)">★</span>
+            <span class="star" data-val="3" onclick="setRating(3)">★</span>
+            <span class="star" data-val="4" onclick="setRating(4)">★</span>
+            <span class="star" data-val="5" onclick="setRating(5)">★</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Feedback</label>
+          <textarea id="fb-text" class="form-control" rows="3" placeholder="Share your experience..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('feedback-modal')">Cancel</button>
+        <button class="btn btn-gold" onclick="submitFeedback()">Submit Rating</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <script src="../js/app.js"></script>
+  <script>
+    // ── Auth guard ─────────────────────────────────────────────
+    if (!Auth.requireRole('CITIZEN')) { /* redirect handled */ }
+    const user = Auth.get();
+    let allComplaints = [];
+    let selectedRating = 0;
+    let feedbackComplaintId = null;
+
+    // Init
+    renderNavbar('Citizen Portal');
+    document.getElementById('citizen-name').textContent = (user.fullName || user.username).split(' ')[0];
+    loadDashboard();
+    loadCategories();
+
+    // ── MAP SETUP ────────────────────────────────────────────────
+    let complainMap = null;
+    let complainMarker = null;
+
+    function initMap(lat, lng) {
+      if (complainMap) { complainMap.remove(); complainMap = null; }
+
+      complainMap = L.map('complaint-map').setView([lat, lng], 15);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19
+      }).addTo(complainMap);
+
+      // Custom red marker
+      const redIcon = L.divIcon({
+        className: '',
+        html: '<div class="map-pin-pulse"></div>',
+        iconSize: [16, 16],
+        iconAnchor: [8, 8]
+      });
+
+      complainMarker = L.marker([lat, lng], { icon: redIcon, draggable: true }).addTo(complainMap);
+      complainMarker.bindPopup('📍 Complaint location<br><small>Drag to adjust</small>').openPopup();
+
+      // Update fields when marker dragged
+      complainMarker.on('dragend', function (e) {
+        const pos = e.target.getLatLng();
+        reverseGeocode(pos.lat, pos.lng);
+      });
+
+      // Click on map to move marker
+      complainMap.on('click', function (e) {
+        complainMarker.setLatLng(e.latlng);
+        reverseGeocode(e.latlng.lat, e.latlng.lng);
+      });
+
+      reverseGeocode(lat, lng);
+    }
+
+    function useCurrentLocation() {
+      const statusEl = document.getElementById('map-status');
+      statusEl.innerHTML = '⏳ Getting your location...';
+
+      if (!navigator.geolocation) {
+        statusEl.innerHTML = '❌ Geolocation not supported by your browser.';
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        function (pos) {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          document.getElementById('comp-lat').value = lat;
+          document.getElementById('comp-lng').value = lng;
+          statusEl.innerHTML = '✅ Location detected! You can drag the pin to adjust.';
+          initMap(lat, lng);
+        },
+        function (err) {
+          statusEl.innerHTML = '❌ Location access denied. Please allow location or click on the map manually.';
+          // Default to India center so map still loads
+          initMap(20.5937, 78.9629);
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+
+    async function searchMapLocation() {
+      const query = document.getElementById('map-search-input').value.trim();
+      if (!query) { Toast.show('Enter an address to search', 'error'); return; }
+
+      const statusEl = document.getElementById('map-status');
+      statusEl.innerHTML = '⏳ Searching...';
+
+      try {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
+        const res = await fetch(url, { headers: { 'Accept-Language': 'en' } });
+        const data = await res.json();
+
+        if (!data.length) {
+          statusEl.innerHTML = '❌ Location not found. Try a more specific address.';
+          return;
+        }
+
+        const lat = parseFloat(data[0].lat);
+        const lng = parseFloat(data[0].lon);
+        document.getElementById('comp-lat').value = lat;
+        document.getElementById('comp-lng').value = lng;
+        statusEl.innerHTML = '✅ Location found! Drag the pin to fine-tune.';
+        initMap(lat, lng);
+      } catch (e) {
+        statusEl.innerHTML = '❌ Search failed. Check your internet connection.';
+      }
+    }
+
+    async function reverseGeocode(lat, lng) {
+      document.getElementById('comp-lat').value = lat;
+      document.getElementById('comp-lng').value = lng;
+
+      try {
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
+        const res = await fetch(url, { headers: { 'Accept-Language': 'en' } });
+        const data = await res.json();
+
+        if (data && data.address) {
+          const addr = data.address;
+
+          // Build full address string
+          const parts = [
+            addr.road || addr.pedestrian || addr.footway,
+            addr.neighbourhood || addr.suburb,
+            addr.city_district
+          ].filter(Boolean);
+          const fullAddress = parts.join(', ') || data.display_name.split(',').slice(0, 3).join(',');
+
+          // Auto-fill form fields
+          document.getElementById('comp-location').value = fullAddress || data.display_name;
+
+          // Ward / area
+          const ward = addr.neighbourhood || addr.suburb || addr.city_district || addr.county || '';
+          if (ward && !document.getElementById('comp-ward').value) {
+            document.getElementById('comp-ward').value = ward;
+          }
+
+          // City
+          const city = addr.city || addr.town || addr.village || addr.state_district || '';
+          if (city) document.getElementById('comp-city').value = city;
+
+          document.getElementById('map-status').innerHTML =
+            `✅ Pinned: <strong>${escapeHtml(fullAddress || data.display_name.split(',')[0])}</strong> — drag pin to adjust`;
+        }
+      } catch (e) {
+        // Geocode failed silently, lat/lng still saved
+        document.getElementById('map-status').innerHTML =
+          `✅ Location pinned at (${lat.toFixed(5)}, ${lng.toFixed(5)})`;
+      }
+    }
+
+    // Auto-init map when Submit section becomes visible
+    const _origShowSection = showSection;
+    showSection = function (name) {
+      _origShowSection(name);
+      if (name === 'submit' && !complainMap) {
+        setTimeout(() => {
+          // Load map centered on India by default
+          initMap(20.5937, 78.9629);
+          document.getElementById('map-status').innerHTML =
+            '📌 Click the map to pin location, or press "Use My Current Location"';
+        }, 100);
+      }
+    };
+
+    function showSection(name) {
+      document.querySelectorAll('main section').forEach(s => s.classList.add('hidden'));
+      document.getElementById('section-' + name).classList.remove('hidden');
+      document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+      const nav = document.getElementById('nav-' + name);
+      if (nav) nav.classList.add('active');
+
+      if (name === 'my-complaints') loadMyComplaints();
+      if (name === 'notifications') loadNotifications();
+      if (name === 'profile') loadProfile();
+    }
+
+    // ── Dashboard ───────────────────────────────────────────────
+    async function loadDashboard() {
+      try {
+        const complaints = await API.getCitizenComplaints(user.userId);
+        allComplaints = complaints;
+        const total = complaints.length;
+        const pending = complaints.filter(c => ['SUBMITTED', 'ASSIGNED_TO_DEPARTMENT', 'ASSIGNED_TO_OFFICER'].includes(c.status)).length;
+        const inProg = complaints.filter(c => c.status === 'IN_PROGRESS').length;
+        const resolved = complaints.filter(c => ['RESOLVED', 'CLOSED'].includes(c.status)).length;
+        document.getElementById('stat-total').textContent = total;
+        document.getElementById('stat-pending').textContent = pending;
+        document.getElementById('stat-progress').textContent = inProg;
+        document.getElementById('stat-resolved').textContent = resolved;
+
+        const recent = complaints.slice(0, 5);
+        const el = document.getElementById('recent-complaints-list');
+        if (!recent.length) {
+          el.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>No complaints yet. <a href="#" onclick="showSection('submit')">Submit your first one!</a></p></div>`;
+        } else {
+          el.innerHTML = recent.map(c => buildComplaintCard(c, 'openComplaintModal')).join('');
+        }
+      } catch (e) { Toast.show('Failed to load dashboard: ' + e.message, 'error'); }
+    }
+
+    // ── My Complaints ───────────────────────────────────────────
+    async function loadMyComplaints() {
+      try {
+        allComplaints = await API.getCitizenComplaints(user.userId);
+        renderComplaintList(allComplaints);
+      } catch (e) { Toast.show('Failed to load complaints', 'error'); }
+    }
+
+    function renderComplaintList(list) {
+      const el = document.getElementById('all-complaints-list');
+      if (!list.length) {
+        el.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>No complaints found.</p></div>`;
+      } else {
+        el.innerHTML = list.map(c => buildComplaintCard(c, 'openComplaintModal')).join('');
+      }
+    }
+
+    function filterComplaints(status, chipEl) {
+      document.querySelectorAll('#status-filters .filter-chip').forEach(c => c.classList.remove('active'));
+      chipEl.classList.add('active');
+      const filtered = status === 'ALL' ? allComplaints :
+        allComplaints.filter(c => c.status === status);
+      renderComplaintList(filtered);
+    }
+
+    // ── Categories ──────────────────────────────────────────────
+    async function loadCategories() {
+      try {
+        const cats = await API.getCategories();
+        const sel = document.getElementById('comp-category');
+        cats.forEach(cat => {
+          const opt = document.createElement('option');
+          opt.value = cat.value;
+          opt.textContent = cat.label;
+          sel.appendChild(opt);
+        });
+      } catch (e) { }
+    }
+
+    // ── Submit Complaint ────────────────────────────────────────
+    async function submitComplaint() {
+      const body = {
+        citizenId: user.userId,
+        category: document.getElementById('comp-category').value,
+        title: document.getElementById('comp-title').value.trim(),
+        description: document.getElementById('comp-desc').value.trim(),
+        location: document.getElementById('comp-location').value.trim(),
+        ward: document.getElementById('comp-ward').value.trim(),
+        city: document.getElementById('comp-city').value.trim(),
+        imageUrl: document.getElementById('comp-image').value.trim()
+      };
+      const errEl = document.getElementById('submit-error');
+      errEl.style.display = 'none';
+
+      if (!body.category || !body.title || !body.description || !body.location) {
+        errEl.textContent = 'Please fill all required fields.';
+        errEl.style.display = 'block'; return;
+      }
+      try {
+        Loader.show();
+        const res = await API.submitComplaint(body);
+        document.getElementById('new-complaint-id').textContent = res.complaintId;
+        document.getElementById('submit-success').classList.remove('hidden');
+        resetSubmitForm();
+        Toast.show('Complaint ' + res.complaintId + ' submitted!', 'success');
+        loadDashboard();
+      } catch (e) {
+        errEl.textContent = '❌ ' + e.message;
+        errEl.style.display = 'block';
+      } finally { Loader.hide(); }
+    }
+
+    function resetSubmitForm() {
+      ['comp-category', 'comp-title', 'comp-desc', 'comp-location', 'comp-ward', 'comp-city', 'comp-image']
+        .forEach(id => {
+          const el = document.getElementById(id);
+          if (el.tagName === 'SELECT') el.selectedIndex = 0;
+          else el.value = '';
+        });
+    }
+
+    // ── Track ───────────────────────────────────────────────────
+    async function trackComplaint() {
+      const id = document.getElementById('track-id-input').value.trim().toUpperCase();
+      if (!id) { Toast.show('Enter a complaint ID', 'error'); return; }
+      try {
+        Loader.show();
+        const data = await API.trackComplaint(id);
+        document.getElementById('track-result').classList.remove('hidden');
+        document.getElementById('track-complaint-id').textContent = data.complaintId;
+        document.getElementById('track-status-badge').innerHTML = statusBadge(data.status);
+        document.getElementById('track-category').textContent = data.category;
+        document.getElementById('track-priority').innerHTML = priorityBadge(data.priority);
+        document.getElementById('track-dept').textContent = data.department;
+        document.getElementById('track-officer').textContent = data.officer;
+        document.getElementById('track-deadline').textContent = formatDate(data.deadline);
+        document.getElementById('track-overdue').innerHTML = data.isOverdue
+          ? '<span style="color:var(--red);font-weight:700;">⚠ YES</span>'
+          : '<span style="color:var(--civic-green);">No</span>';
+
+        // Timeline
+        const tlEl = document.getElementById('track-timeline');
+        tlEl.innerHTML = (data.history || []).map(h => `
+        <div class="timeline-item">
+          <div class="timeline-dot ${(h.status || '').toLowerCase()}"></div>
+          <div class="timeline-time">${formatDate(h.timestamp)}</div>
+          <div class="timeline-action">${escapeHtml(h.action)}</div>
+          <div class="timeline-by">By: ${escapeHtml(h.performedBy)}</div>
+        </div>`).join('');
+      } catch (e) {
+        Toast.show('Complaint not found: ' + id, 'error');
+      } finally { Loader.hide(); }
+    }
+
+    // ── Complaint Modal ─────────────────────────────────────────
+    async function openComplaintModal(complaintId) {
+      openModal('complaint-modal');
+      document.getElementById('modal-complaint-id').textContent = complaintId;
+      document.getElementById('modal-body-content').innerHTML = '<div class="spinner"></div>';
+      document.getElementById('modal-footer-content').innerHTML = '';
+
+      try {
+        const c = await API.getComplaint(complaintId);
+        document.getElementById('modal-body-content').innerHTML = `
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+          ${statusBadge(c.status)} ${priorityBadge(c.priority)}
+          ${c.escalated ? '<span class="badge badge-escalated">⚠ Escalated</span>' : ''}
+        </div>
+        <h3 style="color:var(--navy);margin-bottom:8px;">${escapeHtml(c.title)}</h3>
+        <p style="color:var(--text-mid);margin-bottom:16px;">${escapeHtml(c.description)}</p>
+        <div class="form-grid" style="font-size:0.87rem;margin-bottom:16px;">
+          <div><div class="text-muted">Category</div><div class="fw-bold">${CATEGORY_LABELS[c.category] || c.category}</div></div>
+          <div><div class="text-muted">Location</div><div class="fw-bold">${escapeHtml(c.location || '')}</div></div>
+          <div><div class="text-muted">Department</div><div class="fw-bold">${escapeHtml(c.departmentName || 'Not assigned')}</div></div>
+          <div><div class="text-muted">Officer</div><div class="fw-bold">${escapeHtml(c.assignedOfficerName || 'Not assigned')}</div></div>
+          <div><div class="text-muted">Submitted</div><div class="fw-bold">${formatDate(c.createdAt)}</div></div>
+          <div><div class="text-muted">Last Updated</div><div class="fw-bold">${formatDate(c.lastUpdated)}</div></div>
+        </div>
+        ${c.resolutionNote ? `
+          <div class="alert alert-success">
+            <div><strong>Resolution:</strong> ${escapeHtml(c.resolutionNote)}</div>
+          </div>` : ''}
+        ${c.citizenRating ? `
+          <div class="alert alert-info">
+            <span>Your rating: ${'⭐'.repeat(c.citizenRating)} (${c.citizenRating}/5)</span>
+          </div>` : ''}
+        <h4 style="margin-bottom:12px;color:var(--navy);">Timeline</h4>
+        <div class="timeline">
+          ${(c.history || []).map(h => `
+            <div class="timeline-item">
+              <div class="timeline-dot ${(h.status || '').toLowerCase()}"></div>
+              <div class="timeline-time">${formatDate(h.timestamp)}</div>
+              <div class="timeline-action">${escapeHtml(h.action)}</div>
+            </div>`).join('')}
+        </div>`;
+
+        // Footer actions
+        const footer = document.getElementById('modal-footer-content');
+        if ((c.status === 'RESOLVED' || c.status === 'CLOSED') && !c.citizenRating) {
+          footer.innerHTML = `<button class="btn btn-gold" onclick="openFeedbackModal('${c.complaintId}')">⭐ Rate & Feedback</button>`;
+        }
+      } catch (e) {
+        document.getElementById('modal-body-content').innerHTML =
+          `<div class="alert alert-error">Failed to load: ${e.message}</div>`;
+      }
+    }
+
+    // ── Feedback ────────────────────────────────────────────────
+    function openFeedbackModal(complaintId) {
+      feedbackComplaintId = complaintId;
+      document.getElementById('fb-complaint-id').textContent = complaintId;
+      document.getElementById('fb-text').value = '';
+      setRating(0);
+      closeModal('complaint-modal');
+      openModal('feedback-modal');
+    }
+
+    function setRating(val) {
+      selectedRating = val;
+      document.querySelectorAll('.star').forEach(s => {
+        s.classList.toggle('filled', parseInt(s.dataset.val) <= val);
+      });
+    }
+
+    async function submitFeedback() {
+      if (!selectedRating) { Toast.show('Please select a rating', 'error'); return; }
+      try {
+        await API.submitFeedback(feedbackComplaintId, {
+          citizenId: user.userId,
+          rating: selectedRating,
+          feedback: document.getElementById('fb-text').value.trim()
+        });
+        closeModal('feedback-modal');
+        Toast.show('Thank you for your feedback!', 'success');
+        loadDashboard();
+      } catch (e) { Toast.show('Failed to submit: ' + e.message, 'error'); }
+    }
+
+    // ── Notifications ───────────────────────────────────────────
+    async function loadNotifications() {
+      try {
+        const notifs = await API.getNotifications(user.userId);
+        const el = document.getElementById('notif-list');
+        if (!notifs.length) {
+          el.innerHTML = `<div class="empty-state"><div class="empty-icon">🔔</div><p>No notifications yet.</p></div>`;
+        } else {
+          el.innerHTML = notifs.map(n => `
+          <div class="complaint-card" style="${n.read ? 'opacity:0.65;' : ''}">
+            <div class="cc-header">
+              <div>
+                <div class="cc-id">${n.type}</div>
+                <div class="cc-title">${escapeHtml(n.title)}</div>
+              </div>
+              <span style="font-size:0.78rem;color:var(--text-muted);">${timeAgo(n.createdAt)}</span>
+            </div>
+            <div class="cc-desc">${escapeHtml(n.message)}</div>
+            ${!n.read ? `<div style="margin-top:12px;"><button class="btn btn-outline btn-xs" onclick="markNotifRead('${n.id}', this)">Mark Read</button></div>` : ''}
+          </div>`).join('');
+        }
+      } catch (e) { }
+    }
+
+    async function markNotifRead(id, btn) {
+      await API.markRead(id);
+      btn.closest('.complaint-card').style.opacity = '0.65';
+      btn.style.display = 'none';
+      // Update badge
+      API.getUnreadCount(user.userId).then(r => {
+        const badge = document.getElementById('notif-badge');
+        if (r.unreadCount > 0) { badge.textContent = r.unreadCount; badge.classList.remove('hidden'); }
+        else badge.classList.add('hidden');
+      }).catch(() => { });
+    }
+
+    // ── Profile ─────────────────────────────────────────────────
+    async function loadProfile() {
+      try {
+        const profile = await API.getProfile(user.userId);
+        document.getElementById('prof-name').value = profile.fullName || '';
+        document.getElementById('prof-username').value = profile.username || '';
+        document.getElementById('prof-email').value = profile.email || '';
+        document.getElementById('prof-phone').value = profile.phone || '';
+        document.getElementById('prof-ward').value = profile.ward || '';
+        document.getElementById('prof-city').value = profile.city || '';
+      } catch (e) { Toast.show('Could not load profile', 'error'); }
+    }
+
+    async function saveProfile() {
+      try {
+        const res = await API.updateProfile(user.userId, {
+          fullName: document.getElementById('prof-name').value,
+          phone: document.getElementById('prof-phone').value,
+          ward: document.getElementById('prof-ward').value
+        });
+        const stored = Auth.get();
+        stored.fullName = res.fullName;
+        Auth.save(stored);
+        Toast.show('Profile updated!', 'success');
+      } catch (e) { Toast.show('Update failed: ' + e.message, 'error'); }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+[ {
+  "id" : "AUD-000001",
+  "performedBy" : "CIT-0001",
+  "userRole" : "CITIZEN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "CIT-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-15T17:12:27.7274934"
+}, {
+  "id" : "AUD-000001",
+  "performedBy" : "OFF-0001",
+  "userRole" : "OFFICER",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "OFF-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-15T17:12:41.9787554"
+}, {
+  "id" : "AUD-000002",
+  "performedBy" : "ADM-0001",
+  "userRole" : "ADMIN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "ADM-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-15T17:13:01.5254986"
+}, {
+  "id" : "AUD-000003",
+  "performedBy" : "CIT-0001",
+  "userRole" : "CITIZEN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "CIT-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-15T17:13:51.0607979"
+}, {
+  "id" : "AUD-000004",
+  "performedBy" : "ADM-0001",
+  "userRole" : "ADMIN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "ADM-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-15T17:14:23.8432776"
+}, {
+  "id" : "AUD-000005",
+  "performedBy" : "OFF-0001",
+  "userRole" : "OFFICER",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "OFF-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-15T17:14:59.4520542"
+}, {
+  "id" : "AUD-000006",
+  "performedBy" : "CIT-0001",
+  "userRole" : "CITIZEN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "CIT-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-15T17:23:34.2401298"
+}, {
+  "id" : "AUD-000007",
+  "performedBy" : "ADM-0001",
+  "userRole" : "ADMIN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "ADM-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-15T17:24:58.8374469"
+}, {
+  "id" : "AUD-000008",
+  "performedBy" : "OFF-0001",
+  "userRole" : "OFFICER",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "OFF-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-15T17:26:28.2052704"
+}, {
+  "id" : "AUD-000009",
+  "performedBy" : "OFF-0001",
+  "userRole" : "OFFICER",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "OFF-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-15T17:28:27.2303826"
+}, {
+  "id" : "AUD-000001",
+  "performedBy" : "CIT-0001",
+  "userRole" : "CITIZEN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "CIT-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-16T09:15:53.7960471"
+}, {
+  "id" : "AUD-000002",
+  "performedBy" : "CIT-0001",
+  "userRole" : "CITIZEN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "CIT-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-16T09:21:13.3547793"
+}, {
+  "id" : "AUD-000001",
+  "performedBy" : "ADM-0001",
+  "userRole" : "ADMIN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "ADM-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-17T12:20:25.3760057"
+}, {
+  "id" : "AUD-000001",
+  "performedBy" : "CIT-0001",
+  "userRole" : "CITIZEN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "CIT-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-17T12:49:04.5984276"
+}, {
+  "id" : "AUD-000002",
+  "performedBy" : "ADM-0001",
+  "userRole" : "ADMIN",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "ADM-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-17T12:49:41.0980431"
+}, {
+  "id" : "AUD-000003",
+  "performedBy" : "OFF-0001",
+  "userRole" : "OFFICER",
+  "action" : "LOGIN",
+  "entityType" : "USER",
+  "entityId" : "OFF-0001",
+  "details" : "User logged in",
+  "ipAddress" : null,
+  "timestamp" : "2026-03-17T12:50:28.5677864"
+} ]
