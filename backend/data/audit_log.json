@@ -58,6 +58,7 @@
   "details" : "User logged in",
   "ipAddress" : null,
   "timestamp" : "2026-03-15T17:14:59.4520542"
+<<<<<<< HEAD
 }, {
   "id" : "AUD-000006",
   "performedBy" : "CIT-0001",
@@ -158,4 +159,6 @@
   "details" : "User logged in",
   "ipAddress" : null,
   "timestamp" : "2026-03-17T12:50:28.5677864"
+=======
+>>>>>>> c18f1006529b15f62fa9633102156bba100c06ac
 } ]

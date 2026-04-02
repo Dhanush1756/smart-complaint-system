@@ -73,7 +73,11 @@
   "fullName" : "Raj Kumar",
   "active" : true,
   "createdAt" : "2026-03-15T17:12:14.1017799",
+<<<<<<< HEAD
   "lastLogin" : "2026-03-17T12:50:28.5637169",
+=======
+  "lastLogin" : "2026-03-15T17:14:59.4490532",
+>>>>>>> c18f1006529b15f62fa9633102156bba100c06ac
   "role" : "OFFICER",
   "employeeId" : "EMP-001",
   "departmentId" : "DEPT-001",
@@ -113,7 +117,11 @@
   "fullName" : "System Administrator",
   "active" : true,
   "createdAt" : "2026-03-15T17:12:14.0725038",
+<<<<<<< HEAD
   "lastLogin" : "2026-03-17T12:49:41.0928539",
+=======
+  "lastLogin" : "2026-03-15T17:14:23.8397625",
+>>>>>>> c18f1006529b15f62fa9633102156bba100c06ac
   "role" : "ADMIN",
   "designation" : "Chief Municipal Administrator",
   "permissions" : [ "MANAGE_DEPARTMENTS", "SYSTEM_CONFIG", "MANAGE_OFFICERS", "MANAGE_COMPLAINTS", "VIEW_REPORTS" ],
@@ -128,7 +136,11 @@
   "fullName" : "Ramu Shankar",
   "active" : true,
   "createdAt" : "2026-03-15T17:12:14.1529861",
+<<<<<<< HEAD
   "lastLogin" : "2026-03-17T12:49:04.5508651",
+=======
+  "lastLogin" : "2026-03-15T17:13:51.0582927",
+>>>>>>> c18f1006529b15f62fa9633102156bba100c06ac
   "role" : "CITIZEN",
   "address" : "12, MG Road",
   "ward" : "Ward 5",
